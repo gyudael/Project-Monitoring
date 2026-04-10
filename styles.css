@@ -2459,7 +2459,7 @@ input[type="time"] {
     display: flex;
     gap: 12px;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     background: rgba(255,255,255,0.82);
     border-radius: 16px;
     padding: 14px 18px;
@@ -2505,7 +2505,8 @@ input[type="time"] {
     display: flex;
     gap: 10px;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
 }
 .ts-filter-selects select,
 .ts-filter-selects input[type="date"] {
