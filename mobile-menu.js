@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
         setupMobileMenu();
+        setupDesktopToggle();
     }, 100);
 
     // Handle window resize
@@ -88,6 +89,43 @@ function closeSidebar() {
         if (overlay) {
             overlay.classList.remove('open');
         }
+    }
+}
+
+function setupDesktopToggle() {
+    if (window.innerWidth <= 768) return;
+
+    const topBar = document.querySelector('.top-bar');
+    const headerLeft = document.querySelector('.header-left');
+    const sidebar = document.querySelector('.sidebar');
+    if (!topBar || !sidebar) return;
+
+    // Don't add duplicate
+    if (document.querySelector('.sidebar-toggle-btn')) return;
+
+    const btn = document.createElement('button');
+    btn.className = 'sidebar-toggle-btn';
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'Toggle Sidebar');
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+
+    // Restore saved state
+    if (localStorage.getItem('sidebarCollapsed') === '1') {
+        sidebar.classList.add('collapsed');
+        btn.querySelector('svg').style.transform = 'scaleX(-1)';
+    }
+
+    btn.addEventListener('click', function() {
+        sidebar.classList.toggle('collapsed');
+        const isCollapsed = sidebar.classList.contains('collapsed');
+        btn.querySelector('svg').style.transform = isCollapsed ? 'scaleX(-1)' : '';
+        localStorage.setItem('sidebarCollapsed', isCollapsed ? '1' : '0');
+    });
+
+    if (headerLeft) {
+        headerLeft.insertBefore(btn, headerLeft.firstChild);
+    } else {
+        topBar.insertBefore(btn, topBar.firstChild);
     }
 }
 

@@ -65,155 +65,243 @@
             </header>
 
             <div class="content-wrapper">
+                <!-- Step Indicator -->
+                <div class="form-steps">
+                    <div class="step active" data-step="1">
+                        <div class="step-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v3"/></svg>
+                        </div>
+                        <span>Perangkat</span>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step" data-step="2">
+                        <div class="step-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        </div>
+                        <span>Waktu & Lokasi</span>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step" data-step="3">
+                        <div class="step-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                        </div>
+                        <span>Kondisi & Catatan</span>
+                    </div>
+                </div>
+
                 <form class="maintenance-form" id="maintenanceForm">
-                    <!-- QR Code Section -->
+                    <!-- Card 1: Identifikasi Perangkat -->
                     <div class="form-card">
-                        <fieldset class="form-section">
-                            <legend>Identifikasi Perangkat</legend>
-                            
-                            <div class="qr-input-group">
-                                <div class="qr-scanner">
-                                    <button type="button" class="btn btn-primary btn-lg" id="openCamera">
-                                        <span>📱</span> Scan QR Code
-                                    </button>
-                                    <p class="hint">Arahkan kamera ke QR code pada printer</p>
+                        <div class="form-card-header">
+                            <div class="form-card-icon" style="background: linear-gradient(135deg,#4facfe,#00f2fe);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v3"/><line x1="12" y1="12" x2="12" y2="12.01"/></svg>
+                            </div>
+                            <div>
+                                <h3>Identifikasi Perangkat</h3>
+                                <p>Scan QR code atau isi ID perangkat secara manual</p>
+                            </div>
+                        </div>
+
+                        <div class="qr-scan-zone">
+                            <button type="button" class="btn-qr-scan" id="openCamera">
+                                <div class="qr-icon-wrap">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3z"/><path d="M17 17h4v4h-4z"/></svg>
                                 </div>
-
-                                <!-- Hidden file input for camera -->
-                                <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display: none;">
-
-                                <!-- QR Preview -->
-                                <div id="qrPreview" class="qr-preview" style="display: none;">
-                                    <img id="qrImage" src="" alt="QR Preview">
-                                    <button type="button" class="btn btn-sm btn-secondary" onclick="document.getElementById('cameraInput').click()">
-                                        Ambil Ulang
-                                    </button>
+                                <div>
+                                    <strong>Scan QR Code</strong>
+                                    <span>Arahkan kamera ke QR code perangkat</span>
                                 </div>
-                            </div>
-
-                            <div class="divider">atau</div>
-
-                            <div class="form-group">
-                                <label for="printerId">ID / Nama Perangkat *</label>
-                                <input type="text" id="printerId" name="printerId" placeholder="Contoh: PR-001 atau HP LaserJet Pro" required>
-                                <small>Bisa diisi manual jika scan QR tidak berhasil</small>
-                            </div>
-                        </fieldset>
-                    </div>
-
-                    <!-- Location & Date Section -->
-                    <div class="form-card">
-                        <fieldset class="form-section">
-                            <legend>Informasi Lokasi & Waktu</legend>
-
-                            <div class="form-group">
-                                <label for="location">Lokasi Perangkat *</label>
-                                <input type="text" id="location" name="location" placeholder="Kantor Lantai 1, Ruang Operasional" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="maintenanceDate">Tanggal Maintenance *</label>
-                                <input type="datetime-local" id="maintenanceDate" name="maintenanceDate" required>
-                            </div>
-                        </fieldset>
-                    </div>
-
-                    <!-- Photo Upload Section -->
-                    <div class="form-card">
-                        <fieldset class="form-section">
-                            <legend>Dokumentasi</legend>
-
-                            <div class="form-group">
-                                <label for="photoUpload">Upload Foto Kegiatan *</label>
-                                <div class="file-upload">
-                                    <input type="file" id="photoUpload" name="photoUpload" accept="image/*" required>
-                                    <div class="upload-area">
-                                        <span class="upload-icon">📸</span>
-                                        <p>Klik atau drag foto ke area ini</p>
-                                        <small>File: JPG, PNG (Max 5MB)</small>
-                                    </div>
+                                <div class="btn-qr-arrow">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
                                 </div>
-
-                                <!-- Photo Preview -->
-                                <div id="photoPreview" class="photo-preview" style="display: none;">
-                                    <img id="previewImage" src="" alt="Photo Preview">
-                                    <button type="button" class="btn-close" onclick="clearPhotoPreview()">✕</button>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </div>
-
-                    <!-- Condition Assessment Section -->
-                    <div class="form-card">
-                        <fieldset class="form-section">
-                            <legend>Penilaian Kondisi</legend>
-
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="condition">Kondisi Perangkat *</label>
-                                    <select id="condition" name="condition" required>
-                                        <option value="">-- Pilih kondisi --</option>
-                                        <option value="baik">Baik</option>
-                                        <option value="normal">Normal / Cukup</option>
-                                        <option value="rusak">Rusak / Memerlukan Perbaikan</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="maintenanceType">Jenis Maintenance *</label>
-                                    <select id="maintenanceType" name="maintenanceType" required>
-                                        <option value="">-- Pilih jenis --</option>
-                                        <option value="preventive">Preventive (Pencegahan)</option>
-                                        <option value="corrective">Corrective (Perbaikan)</option>
-                                        <option value="check">Check / Inspeksi</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="notes">Catatan & Deskripsi Kegiatan</label>
-                                <textarea id="notes" name="notes" rows="5" placeholder="Jelaskan kondisi printer, masalah yang ditemukan, dan tindakan yang diambil..." class="form-control"></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="technician">Nama Teknisi *</label>
-                                <input type="text" id="technician" name="technician" placeholder="Nama lengkap saat maintenance" required>
-                            </div>
-                        </fieldset>
-                    </div>
-
-                    <!-- Parts Used Section -->
-                    <div class="form-card">
-                        <fieldset class="form-section">
-                            <legend>Suku Cadang / Bahan yang Digunakan</legend>
-
-                            <div class="parts-list">
-                                <div class="part-item">
-                                    <input type="text" placeholder="Nama suku cadang / bahan" class="part-name">
-                                    <input type="number" placeholder="Qty" class="part-qty" min="1" value="1">
-                                    <button type="button" class="btn-icon-remove">✕</button>
-                                </div>
-                            </div>
-
-                            <button type="button" class="btn btn-sm btn-secondary" id="addPartBtn">
-                                + Tambah Suku Cadang
                             </button>
-                        </fieldset>
+                            <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none;">
+                            <div id="qrPreview" class="qr-preview-card" style="display:none;">
+                                <img id="qrImage" src="" alt="QR Preview">
+                                <div class="qr-preview-info">
+                                    <span class="badge-success">QR Terdeteksi</span>
+                                    <button type="button" class="btn-link-sm" onclick="document.getElementById('cameraInput').click()">Scan Ulang</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-divider"><span>atau isi manual</span></div>
+
+                        <div class="input-field-group">
+                            <label for="printerId">ID / Nama Perangkat <span class="req">*</span></label>
+                            <div class="input-with-icon">
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                <input type="text" id="printerId" name="printerId" placeholder="Contoh: PR-001 atau HP LaserJet Pro" required>
+                            </div>
+                            <small>Bisa diisi manual jika scan QR tidak berhasil</small>
+                        </div>
                     </div>
 
-                    <!-- Submit Section -->
-                    <div class="form-actions">
-                        <button type="reset" class="btn btn-secondary">Bersihkan Form</button>
-                        <button type="submit" class="btn btn-primary btn-lg">
-                            Simpan Laporan Maintenance
+                    <!-- Card 2: Lokasi & Waktu -->
+                    <div class="form-card">
+                        <div class="form-card-header">
+                            <div class="form-card-icon" style="background: linear-gradient(135deg,#a18cd1,#fbc2eb);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                            </div>
+                            <div>
+                                <h3>Lokasi &amp; Waktu</h3>
+                                <p>Informasi tempat dan jadwal maintenance</p>
+                            </div>
+                        </div>
+
+                        <div class="form-row-2">
+                            <div class="input-field-group">
+                                <label for="location">Lokasi Perangkat <span class="req">*</span></label>
+                                <div class="input-with-icon">
+                                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                    <input type="text" id="location" name="location" placeholder="Kantor Lantai 1, Ruang Operasional" required>
+                                </div>
+                            </div>
+                            <div class="input-field-group">
+                                <label for="maintenanceDate">Tanggal &amp; Waktu <span class="req">*</span></label>
+                                <div class="input-with-icon">
+                                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                    <input type="datetime-local" id="maintenanceDate" name="maintenanceDate" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Dokumentasi -->
+                    <div class="form-card">
+                        <div class="form-card-header">
+                            <div class="form-card-icon" style="background: linear-gradient(135deg,#f093fb,#f5576c);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                            </div>
+                            <div>
+                                <h3>Dokumentasi Foto</h3>
+                                <p>Upload bukti foto kegiatan maintenance</p>
+                            </div>
+                        </div>
+
+                        <div class="upload-drop-zone" id="uploadZone">
+                            <input type="file" id="photoUpload" name="photoUpload" accept="image/*" required>
+                            <div class="upload-drop-content">
+                                <div class="upload-drop-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"/></svg>
+                                </div>
+                                <p><strong>Klik untuk upload</strong> atau drag &amp; drop</p>
+                                <small>JPG, PNG — Maks. 5MB</small>
+                            </div>
+                        </div>
+                        <div id="photoPreview" class="photo-preview-modern" style="display:none;">
+                            <img id="previewImage" src="" alt="Preview">
+                            <button type="button" class="btn-remove-photo" onclick="clearPhotoPreview()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Kondisi & Penilaian -->
+                    <div class="form-card">
+                        <div class="form-card-header">
+                            <div class="form-card-icon" style="background: linear-gradient(135deg,#43e97b,#38f9d7);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                            </div>
+                            <div>
+                                <h3>Penilaian &amp; Catatan</h3>
+                                <p>Kondisi perangkat dan deskripsi kegiatan</p>
+                            </div>
+                        </div>
+
+                        <div class="form-row-2">
+                            <div class="input-field-group">
+                                <label for="condition">Kondisi Perangkat <span class="req">*</span></label>
+                                <div class="input-with-icon">
+                                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                                    <select id="condition" name="condition" required>
+                                        <option value="">Pilih kondisi...</option>
+                                        <option value="baik">✅ Baik</option>
+                                        <option value="normal">⚠️ Normal / Cukup</option>
+                                        <option value="rusak">❌ Rusak / Perlu Perbaikan</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="input-field-group">
+                                <label for="maintenanceType">Jenis Maintenance <span class="req">*</span></label>
+                                <div class="input-with-icon">
+                                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg>
+                                    <select id="maintenanceType" name="maintenanceType" required>
+                                        <option value="">Pilih jenis...</option>
+                                        <option value="preventive">🛡️ Preventive (Pencegahan)</option>
+                                        <option value="corrective">🔧 Corrective (Perbaikan)</option>
+                                        <option value="check">🔍 Check / Inspeksi</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-field-group">
+                            <label for="technician">Nama Teknisi <span class="req">*</span></label>
+                            <div class="input-with-icon">
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                <input type="text" id="technician" name="technician" placeholder="Nama lengkap teknisi" required>
+                            </div>
+                        </div>
+
+                        <div class="input-field-group">
+                            <label for="notes">Catatan Kegiatan</label>
+                            <textarea id="notes" name="notes" rows="4" placeholder="Jelaskan kondisi perangkat, masalah yang ditemukan, dan tindakan yang dilakukan..." class="form-textarea"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Card 5: Suku Cadang -->
+                    <div class="form-card">
+                        <div class="form-card-header">
+                            <div class="form-card-icon" style="background: linear-gradient(135deg,#fa709a,#fee140);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+                            </div>
+                            <div>
+                                <h3>Suku Cadang</h3>
+                                <p>Bahan atau komponen yang digunakan</p>
+                            </div>
+                        </div>
+
+                        <div class="parts-list" id="partsList">
+                            <div class="part-item">
+                                <div class="input-with-icon">
+                                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                                    <input type="text" placeholder="Nama suku cadang / bahan" class="part-name">
+                                </div>
+                                <input type="number" placeholder="Qty" class="part-qty" min="1" value="1">
+                                <button type="button" class="btn-icon-remove" title="Hapus">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn-add-part" id="addPartBtn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                            Tambah Suku Cadang
+                        </button>
+                    </div>
+
+                    <!-- Submit -->
+                    <div class="form-submit-area">
+                        <button type="reset" class="btn-form-secondary">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+                            Bersihkan Form
+                        </button>
+                        <button type="submit" class="btn-form-primary">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            Simpan Laporan
                         </button>
                     </div>
                 </form>
 
                 <!-- Success Message -->
-                <div id="successMessage" class="message-box message-success" style="display: none;">
-                    <span>✔️</span>
+                <div id="successMessage" class="success-banner" style="display:none;">
+                    <div class="success-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
                     <div>
-                        <strong>Berhasil!</strong>
-                        <p>Laporan maintenance telah disimpan.</p>
+                        <strong>Laporan Berhasil Disimpan!</strong>
+                        <p>Data maintenance telah tercatat dengan sukses.</p>
                     </div>
                 </div>
             </div>
@@ -245,22 +333,32 @@
             }
         });
 
-        // Photo Upload Handler
+        // Photo Upload Handler — click on zone triggers file input
+        const uploadZone = document.getElementById('uploadZone');
         const fileUploadInput = document.getElementById('photoUpload');
-        fileUploadInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    document.getElementById('previewImage').src = event.target.result;
-                    document.getElementById('photoPreview').style.display = 'flex';
-                };
-                reader.readAsDataURL(file);
-            }
+        uploadZone.addEventListener('click', () => fileUploadInput.click());
+        uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+        uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault(); uploadZone.classList.remove('drag-over');
+            const file = e.dataTransfer.files[0];
+            if (file) handlePhoto(file);
         });
-
+        fileUploadInput.addEventListener('change', (e) => {
+            if (e.target.files[0]) handlePhoto(e.target.files[0]);
+        });
+        function handlePhoto(file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                document.getElementById('previewImage').src = event.target.result;
+                document.getElementById('photoPreview').style.display = 'flex';
+                document.getElementById('uploadZone').style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        }
         function clearPhotoPreview() {
             document.getElementById('photoPreview').style.display = 'none';
+            document.getElementById('uploadZone').style.display = 'flex';
             document.getElementById('photoUpload').value = '';
         }
 
@@ -270,21 +368,25 @@
             const newPart = document.createElement('div');
             newPart.className = 'part-item';
             newPart.innerHTML = `
-                <input type="text" placeholder="Nama suku cadang / bahan" class="part-name">
+                <div class="input-with-icon">
+                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                    <input type="text" placeholder="Nama suku cadang / bahan" class="part-name">
+                </div>
                 <input type="number" placeholder="Qty" class="part-qty" min="1" value="1">
-                <button type="button" class="btn-icon-remove" onclick="this.parentElement.remove()">✕</button>
+                <button type="button" class="btn-icon-remove" title="Hapus" onclick="this.closest('.part-item').remove()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+                </button>
             `;
-            document.querySelector('.parts-list').appendChild(newPart);
+            document.getElementById('partsList').appendChild(newPart);
         });
 
         // Form Submit
         document.getElementById('maintenanceForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            // Simulate form submission
             setTimeout(() => {
                 document.getElementById('maintenanceForm').style.display = 'none';
                 document.getElementById('successMessage').style.display = 'flex';
-            }, 500);
+            }, 400);
         });
     </script>
     <script src="mobile-menu.js"></script>

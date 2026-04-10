@@ -117,12 +117,14 @@
                         <div class="chart-container">
                             <div class="chart-header">
                                 <h3>Grafik Perhari</h3>
+                                <div class="chart-download"><button class="btn-download" onclick="toggleDlMenu(this)" title="Download">&#11015;</button><div class="dl-menu"><a onclick="dlChart('omitDailyChart','png','OMIT_Harian')">PNG</a><a onclick="dlChart('omitDailyChart','jpg','OMIT_Harian')">JPG</a></div></div>
                             </div>
                             <div class="chart-wrapper"><canvas id="omitDailyChart"></canvas></div>
                         </div>
                         <div class="chart-container">
                             <div class="chart-header">
                                 <h3>Grafik Perbulan</h3>
+                                <div class="chart-download"><button class="btn-download" onclick="toggleDlMenu(this)" title="Download">&#11015;</button><div class="dl-menu"><a onclick="dlChart('omitMonthlyChart','png','OMIT_Bulanan')">PNG</a><a onclick="dlChart('omitMonthlyChart','jpg','OMIT_Bulanan')">JPG</a></div></div>
                             </div>
                             <div class="chart-wrapper"><canvas id="omitMonthlyChart"></canvas></div>
                         </div>
@@ -167,12 +169,14 @@
                         <div class="chart-container">
                             <div class="chart-header">
                                 <h3>Grafik Perhari</h3>
+                                <div class="chart-download"><button class="btn-download" onclick="toggleDlMenu(this)" title="Download">&#11015;</button><div class="dl-menu"><a onclick="dlChart('laptopDailyChart','png','Laptop_Harian')">PNG</a><a onclick="dlChart('laptopDailyChart','jpg','Laptop_Harian')">JPG</a></div></div>
                             </div>
                             <div class="chart-wrapper"><canvas id="laptopDailyChart"></canvas></div>
                         </div>
                         <div class="chart-container">
                             <div class="chart-header">
                                 <h3>Grafik Perbulan</h3>
+                                <div class="chart-download"><button class="btn-download" onclick="toggleDlMenu(this)" title="Download">&#11015;</button><div class="dl-menu"><a onclick="dlChart('laptopMonthlyChart','png','Laptop_Bulanan')">PNG</a><a onclick="dlChart('laptopMonthlyChart','jpg','Laptop_Bulanan')">JPG</a></div></div>
                             </div>
                             <div class="chart-wrapper"><canvas id="laptopMonthlyChart"></canvas></div>
                         </div>
@@ -217,12 +221,14 @@
                         <div class="chart-container">
                             <div class="chart-header">
                                 <h3>Grafik Perhari</h3>
+                                <div class="chart-download"><button class="btn-download" onclick="toggleDlMenu(this)" title="Download">&#11015;</button><div class="dl-menu"><a onclick="dlChart('printerDailyChart','png','Printer_Harian')">PNG</a><a onclick="dlChart('printerDailyChart','jpg','Printer_Harian')">JPG</a></div></div>
                             </div>
                             <div class="chart-wrapper"><canvas id="printerDailyChart"></canvas></div>
                         </div>
                         <div class="chart-container">
                             <div class="chart-header">
                                 <h3>Grafik Perbulan</h3>
+                                <div class="chart-download"><button class="btn-download" onclick="toggleDlMenu(this)" title="Download">&#11015;</button><div class="dl-menu"><a onclick="dlChart('printerMonthlyChart','png','Printer_Bulanan')">PNG</a><a onclick="dlChart('printerMonthlyChart','jpg','Printer_Bulanan')">JPG</a></div></div>
                             </div>
                             <div class="chart-wrapper"><canvas id="printerMonthlyChart"></canvas></div>
                         </div>
@@ -271,8 +277,8 @@
             ds('Actual', [2,4,6,7,8,7,6,5,7,9], '#FF9800')
         ]);
         createLineChart('omitMonthlyChart', monthlyLabels, [
-            ds('Plan', [30,28,35,40,38,32,30,34,36,40,38,35], '#2196F3'),
-            ds('Actual', [25,26,32,38,35,30,28,31,34,0,0,0], '#FF9800')
+            ds('Plan', [30,28,35,40,0,0,0,0,0,0,0,0], '#2196F3'),
+            ds('Actual', [25,26,32,38,0,0,0,0,0,0,0,0], '#FF9800')
         ]);
 
         // ===== DIVISI IT LAPTOP =====
@@ -281,8 +287,8 @@
             ds('Actual', [1,3,3,4,5,4,2,4,3,5], '#E91E63')
         ]);
         createLineChart('laptopMonthlyChart', monthlyLabels, [
-            ds('Plan', [20,22,25,28,26,24,22,25,27,30,28,26], '#4CAF50'),
-            ds('Actual', [18,20,23,26,24,22,20,23,25,0,0,0], '#E91E63')
+            ds('Plan', [20,22,25,28,0,0,0,0,0,0,0,0], '#4CAF50'),
+            ds('Actual', [18,20,23,26,0,0,0,0,0,0,0,0], '#E91E63')
         ]);
 
         // ===== DIVISI IT PRINTER =====
@@ -291,14 +297,42 @@
             ds('Actual', [5,6,8,7,8,7,6,8,8,9], '#FF5722')
         ]);
         createLineChart('printerMonthlyChart', monthlyLabels, [
-            ds('Plan', [40,38,42,45,43,40,38,42,44,46,44,42], '#9C27B0'),
-            ds('Actual', [38,36,40,43,41,38,36,40,42,0,0,0], '#FF5722')
+            ds('Plan', [40,38,42,45,0,0,0,0,0,0,0,0], '#9C27B0'),
+            ds('Actual', [38,36,40,43,0,0,0,0,0,0,0,0], '#FF5722')
         ]);
 
         function filterByDate() {
             const from = document.getElementById('dateFrom').value;
             const to = document.getElementById('dateTo').value;
             alert('Filter: ' + from + ' s/d ' + to + '\n(Integrasi data backend belum tersedia)');
+        }
+
+        function toggleDlMenu(btn) {
+            const menu = btn.nextElementSibling;
+            document.querySelectorAll('.dl-menu.show').forEach(m => { if (m !== menu) m.classList.remove('show'); });
+            menu.classList.toggle('show');
+        }
+        document.addEventListener('click', e => {
+            if (!e.target.closest('.chart-download')) document.querySelectorAll('.dl-menu.show').forEach(m => m.classList.remove('show'));
+        });
+        function dlChart(canvasId, format, name) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            if (format === 'jpg') {
+                const tmp = document.createElement('canvas');
+                tmp.width = canvas.width; tmp.height = canvas.height;
+                const ctx = tmp.getContext('2d');
+                ctx.fillStyle = '#fff';
+                ctx.fillRect(0, 0, tmp.width, tmp.height);
+                ctx.drawImage(canvas, 0, 0);
+                link.href = tmp.toDataURL('image/jpeg', 0.95);
+                link.download = name + '.jpg';
+            } else {
+                link.href = canvas.toDataURL('image/png');
+                link.download = name + '.png';
+            }
+            link.click();
+            document.querySelectorAll('.dl-menu.show').forEach(m => m.classList.remove('show'));
         }
     </script>
     <script src="mobile-menu.js"></script>

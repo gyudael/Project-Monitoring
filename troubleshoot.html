@@ -65,14 +65,42 @@
             </header>
 
             <div class="content-wrapper">
-                <!-- Filter Section -->
-                <section class="filter-section">
-                    <div class="filter-group">
-                        <input type="text" id="searchInput" class="search-box" placeholder="Cari ID perangkat, masalah...">
-                    </div>
 
-                    <div class="filter-group">
-                        <label>Filter Perangkat:</label>
+                <!-- Summary Stats -->
+                <div class="ts-stats-row">
+                    <div class="ts-stat-card">
+                        <div class="ts-stat-icon" style="background:linear-gradient(135deg,#667eea,#764ba2)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                        </div>
+                        <div><p>Total Log</p><h3>5</h3></div>
+                    </div>
+                    <div class="ts-stat-card">
+                        <div class="ts-stat-icon" style="background:linear-gradient(135deg,#43e97b,#38f9d7)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <div><p>Resolved</p><h3>3</h3></div>
+                    </div>
+                    <div class="ts-stat-card">
+                        <div class="ts-stat-icon" style="background:linear-gradient(135deg,#f6d365,#fda085)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        </div>
+                        <div><p>Pending</p><h3>1</h3></div>
+                    </div>
+                    <div class="ts-stat-card">
+                        <div class="ts-stat-icon" style="background:linear-gradient(135deg,#f093fb,#f5576c)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        </div>
+                        <div><p>Escalated</p><h3>1</h3></div>
+                    </div>
+                </div>
+
+                <!-- Filter Bar -->
+                <div class="ts-filter-bar">
+                    <div class="ts-search-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        <input type="text" id="searchInput" placeholder="Cari ID perangkat, masalah, teknisi...">
+                    </div>
+                    <div class="ts-filter-selects">
                         <select id="printerFilter">
                             <option value="">Semua Perangkat</option>
                             <option value="PR-001">PR-001</option>
@@ -81,220 +109,269 @@
                             <option value="PR-004">PR-004</option>
                             <option value="PR-005">PR-005</option>
                         </select>
-                    </div>
-
-                    <div class="filter-group">
-                        <label>Filter Status:</label>
                         <select id="statusFilter">
                             <option value="">Semua Status</option>
                             <option value="resolved">Resolved</option>
                             <option value="pending">Pending</option>
                             <option value="escalated">Escalated</option>
                         </select>
+                        <input type="date" id="dateFilter" title="Filter tanggal">
+                        <button class="ts-btn-reset" onclick="resetFilters()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+                            Reset
+                        </button>
                     </div>
+                </div>
 
-                    <div class="filter-group">
-                        <label>Tanggal:</label>
-                        <input type="date" id="dateFilter">
-                    </div>
+                <!-- Timeline -->
+                <div class="ts-timeline" id="troubleshootTimeline">
 
-                    <button class="btn btn-secondary" onclick="resetFilters()">Ulang Filter</button>
-                </section>
-
-                <!-- Activity Log -->
-                <section class="troubleshoot-log" id="troubleshootTimeline">
                     <!-- Item 1 -->
-                    <div class="log-card" data-printer="PR-001" data-status="resolved">
-                        <div class="log-card-header">
-                            <div class="log-title-group">
-                                <span class="log-status-dot resolved"></span>
-                                <h4>Kertas Macet di Tray</h4>
-                            </div>
-                            <span class="badge badge-success">Resolved</span>
-                        </div>
-                        <div class="log-card-body">
-                            <div class="log-info-grid">
-                                <div class="log-info-item">
-                                    <span class="log-info-label">Perangkat</span>
-                                    <span class="log-info-value">PR-001 — HP LaserJet Pro M404n</span>
+                    <div class="ts-card" data-printer="PR-001" data-status="resolved">
+                        <div class="ts-card-accent resolved"></div>
+                        <div class="ts-card-inner">
+                            <div class="ts-card-top">
+                                <div class="ts-left">
+                                    <span class="ts-badge resolved">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                                        Resolved
+                                    </span>
+                                    <h4>Kertas Macet di Tray</h4>
+                                    <span class="ts-device-chip">PR-001 &mdash; HP LaserJet Pro M404n</span>
                                 </div>
-                                <div class="log-info-item">
-                                    <span class="log-info-label">Masalah</span>
-                                    <span class="log-info-value">Kertas terjepit di pickup mechanism, tombol resume tidak berfungsi</span>
-                                </div>
-                                <div class="log-info-item">
-                                    <span class="log-info-label">Solusi</span>
-                                    <span class="log-info-value">Membersihkan kaca sensor pickup, mengganti pickup roller yang aus, reset sistem perangkat</span>
-                                </div>
-                                <div class="log-info-item">
-                                    <span class="log-info-label">Durasi</span>
-                                    <span class="log-info-value">~25 menit</span>
+                                <div class="ts-card-actions">
+                                    <button class="ts-btn-detail" onclick="viewDetail(this)">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                        Detail
+                                    </button>
                                 </div>
                             </div>
-                        </div>
-                        <div class="log-card-footer">
-                            <div class="log-meta">
-                                <span class="log-meta-item">Budi Santoso</span>
-                                <span class="log-meta-item">12 Apr 2026 • 14:30</span>
+                            <div class="ts-card-body">
+                                <div class="ts-detail-row">
+                                    <span class="ts-detail-label">Masalah</span>
+                                    <span class="ts-detail-value">Kertas terjepit di pickup mechanism, tombol resume tidak berfungsi</span>
+                                </div>
+                                <div class="ts-detail-row">
+                                    <span class="ts-detail-label">Solusi</span>
+                                    <span class="ts-detail-value">Membersihkan kaca sensor pickup, mengganti pickup roller yang aus, reset sistem perangkat</span>
+                                </div>
                             </div>
-                            <button class="btn btn-sm btn-secondary" onclick="viewDetail(this)">Detail</button>
+                            <div class="ts-card-footer">
+                                <div class="ts-meta-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                    Budi Santoso
+                                </div>
+                                <div class="ts-meta-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                    12 Apr 2026 &bull; 14:30
+                                </div>
+                                <div class="ts-meta-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                    ~25 menit
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Item 2 -->
-                    <div class="log-card" data-printer="PR-002" data-status="pending">
-                        <div class="log-card-header">
-                            <div class="log-title-group">
-                                <span class="log-status-dot pending"></span>
-                                <h4>Output Tray Penuh - Sensor Error</h4>
-                            </div>
-                            <span class="badge badge-warning">Pending</span>
-                        </div>
-                        <div class="log-card-body">
-                            <div class="log-info-grid">
-                                <div class="log-info-item">
-                                    <span class="log-info-label">Perangkat</span>
-                                    <span class="log-info-value">PR-002 — Canon imagePRESS C350</span>
+                    <div class="ts-card" data-printer="PR-002" data-status="pending">
+                        <div class="ts-card-accent pending"></div>
+                        <div class="ts-card-inner">
+                            <div class="ts-card-top">
+                                <div class="ts-left">
+                                    <span class="ts-badge pending">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                        Pending
+                                    </span>
+                                    <h4>Output Tray Penuh - Sensor Error</h4>
+                                    <span class="ts-device-chip">PR-002 &mdash; Canon imagePRESS C350</span>
                                 </div>
-                                <div class="log-info-item">
-                                    <span class="log-info-label">Masalah</span>
-                                    <span class="log-info-value">Error "Output tray full" meski tray kosong, sensor tidak responsif</span>
-                                </div>
-                                <div class="log-info-item">
-                                    <span class="log-info-label">Solusi Sementara</span>
-                                    <span class="log-info-value">Restart perangkat, cleaning mode</span>
-                                </div>
-                                <div class="log-info-item">
-                                    <span class="log-info-label">Catatan</span>
-                                    <span class="log-info-value">Perlu teknisi senior & spare parts</span>
+                                <div class="ts-card-actions">
+                                    <button class="ts-btn-detail" onclick="viewDetail(this)">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                        Detail
+                                    </button>
                                 </div>
                             </div>
-                        </div>
-                        <div class="log-card-footer">
-                            <div class="log-meta">
-                                <span class="log-meta-item">Andi Wijaya</span>
-                                <span class="log-meta-item">11 Apr 2026 • 10:15</span>
+                            <div class="ts-card-body">
+                                <div class="ts-detail-row">
+                                    <span class="ts-detail-label">Masalah</span>
+                                    <span class="ts-detail-value">Error "Output tray full" meski tray kosong, sensor tidak responsif</span>
+                                </div>
+                                <div class="ts-detail-row">
+                                    <span class="ts-detail-label">Solusi Sementara</span>
+                                    <span class="ts-detail-value">Restart perangkat, cleaning mode</span>
+                                </div>
+                                <div class="ts-detail-row">
+                                    <span class="ts-detail-label">Catatan</span>
+                                    <span class="ts-detail-value">Perlu teknisi senior &amp; spare parts</span>
+                                </div>
                             </div>
-                            <button class="btn btn-sm btn-secondary" onclick="viewDetail(this)">Detail</button>
+                            <div class="ts-card-footer">
+                                <div class="ts-meta-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                    Andi Wijaya
+                                </div>
+                                <div class="ts-meta-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                    11 Apr 2026 &bull; 10:15
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Item 3 -->
-                    <div class="log-card" data-printer="PR-003" data-status="resolved">
-                        <div class="log-card-header">
-                            <div class="log-title-group">
-                                <span class="log-status-dot resolved"></span>
-                                <h4>Kualitas Print Menurun - Toner Rendah</h4>
-                            </div>
-                            <span class="badge badge-success">Resolved</span>
-                        </div>
-                        <div class="log-card-body">
-                            <div class="log-info-grid">
-                                <div class="log-info-item">
-                                    <span class="log-info-label">Perangkat</span>
-                                    <span class="log-info-value">PR-003 — Xerox WorkCentre 5845</span>
+                    <div class="ts-card" data-printer="PR-003" data-status="resolved">
+                        <div class="ts-card-accent resolved"></div>
+                        <div class="ts-card-inner">
+                            <div class="ts-card-top">
+                                <div class="ts-left">
+                                    <span class="ts-badge resolved">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                                        Resolved
+                                    </span>
+                                    <h4>Kualitas Print Menurun - Toner Rendah</h4>
+                                    <span class="ts-device-chip">PR-003 &mdash; Xerox WorkCentre 5845</span>
                                 </div>
-                                <div class="log-info-item">
-                                    <span class="log-info-label">Masalah</span>
-                                    <span class="log-info-value">Hasil print gelap dan kotor, warning toner low</span>
-                                </div>
-                                <div class="log-info-item">
-                                    <span class="log-info-label">Solusi</span>
-                                    <span class="log-info-value">Mengganti cartridge toner original, cleaning print head, kalibrasi warna</span>
-                                </div>
-                                <div class="log-info-item">
-                                    <span class="log-info-label">Durasi</span>
-                                    <span class="log-info-value">~15 menit</span>
+                                <div class="ts-card-actions">
+                                    <button class="ts-btn-detail" onclick="viewDetail(this)">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                        Detail
+                                    </button>
                                 </div>
                             </div>
-                        </div>
-                        <div class="log-card-footer">
-                            <div class="log-meta">
-                                <span class="log-meta-item">Roni Hermawan</span>
-                                <span class="log-meta-item">10 Apr 2026 • 09:45</span>
+                            <div class="ts-card-body">
+                                <div class="ts-detail-row">
+                                    <span class="ts-detail-label">Masalah</span>
+                                    <span class="ts-detail-value">Hasil print gelap dan kotor, warning toner low</span>
+                                </div>
+                                <div class="ts-detail-row">
+                                    <span class="ts-detail-label">Solusi</span>
+                                    <span class="ts-detail-value">Mengganti cartridge toner original, cleaning print head, kalibrasi warna</span>
+                                </div>
                             </div>
-                            <button class="btn btn-sm btn-secondary" onclick="viewDetail(this)">Detail</button>
+                            <div class="ts-card-footer">
+                                <div class="ts-meta-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                    Roni Hermawan
+                                </div>
+                                <div class="ts-meta-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                    10 Apr 2026 &bull; 09:45
+                                </div>
+                                <div class="ts-meta-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                    ~15 menit
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Item 4 -->
-                    <div class="log-card" data-printer="PR-004" data-status="escalated">
-                        <div class="log-card-header">
-                            <div class="log-title-group">
-                                <span class="log-status-dot escalated"></span>
-                                <h4>Motherboard Error - Hardware Failure</h4>
-                            </div>
-                            <span class="badge badge-danger">Escalated</span>
-                        </div>
-                        <div class="log-card-body">
-                            <div class="log-info-grid">
-                                <div class="log-info-item">
-                                    <span class="log-info-label">Perangkat</span>
-                                    <span class="log-info-value">PR-004 — Ricoh MP C3004</span>
+                    <div class="ts-card" data-printer="PR-004" data-status="escalated">
+                        <div class="ts-card-accent escalated"></div>
+                        <div class="ts-card-inner">
+                            <div class="ts-card-top">
+                                <div class="ts-left">
+                                    <span class="ts-badge escalated">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                                        Escalated
+                                    </span>
+                                    <h4>Motherboard Error - Hardware Failure</h4>
+                                    <span class="ts-device-chip">PR-004 &mdash; Ricoh MP C3004</span>
                                 </div>
-                                <div class="log-info-item">
-                                    <span class="log-info-label">Masalah</span>
-                                    <span class="log-info-value">Sistem tidak boot, error code "MAIN BOARD ERROR"</span>
-                                </div>
-                                <div class="log-info-item">
-                                    <span class="log-info-label">Tindakan</span>
-                                    <span class="log-info-value">Diagnostik hardware menunjukkan kerusakan motherboard. Eskalasi ke vendor resmi</span>
+                                <div class="ts-card-actions">
+                                    <button class="ts-btn-detail" onclick="viewDetail(this)">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                        Detail
+                                    </button>
                                 </div>
                             </div>
-                        </div>
-                        <div class="log-card-footer">
-                            <div class="log-meta">
-                                <span class="log-meta-item">Andi Wijaya</span>
-                                <span class="log-meta-item">2 Apr 2026 • 16:20</span>
+                            <div class="ts-card-body">
+                                <div class="ts-detail-row">
+                                    <span class="ts-detail-label">Masalah</span>
+                                    <span class="ts-detail-value">Sistem tidak boot, error code "MAIN BOARD ERROR"</span>
+                                </div>
+                                <div class="ts-detail-row">
+                                    <span class="ts-detail-label">Tindakan</span>
+                                    <span class="ts-detail-value">Diagnostik hardware menunjukkan kerusakan motherboard. Eskalasi ke vendor resmi</span>
+                                </div>
                             </div>
-                            <button class="btn btn-sm btn-secondary" onclick="viewDetail(this)">Detail</button>
+                            <div class="ts-card-footer">
+                                <div class="ts-meta-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                    Andi Wijaya
+                                </div>
+                                <div class="ts-meta-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                    2 Apr 2026 &bull; 16:20
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Item 5 -->
-                    <div class="log-card" data-printer="PR-005" data-status="resolved">
-                        <div class="log-card-header">
-                            <div class="log-title-group">
-                                <span class="log-status-dot resolved"></span>
-                                <h4>Maintenance Preventive - Full Service</h4>
-                            </div>
-                            <span class="badge badge-success">Resolved</span>
-                        </div>
-                        <div class="log-card-body">
-                            <div class="log-info-grid">
-                                <div class="log-info-item">
-                                    <span class="log-info-label">Perangkat</span>
-                                    <span class="log-info-value">PR-005 — Brother HL-L8360CDW</span>
+                    <div class="ts-card" data-printer="PR-005" data-status="resolved">
+                        <div class="ts-card-accent resolved"></div>
+                        <div class="ts-card-inner">
+                            <div class="ts-card-top">
+                                <div class="ts-left">
+                                    <span class="ts-badge resolved">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                                        Resolved
+                                    </span>
+                                    <h4>Maintenance Preventive - Full Service</h4>
+                                    <span class="ts-device-chip">PR-005 &mdash; Brother HL-L8360CDW</span>
                                 </div>
-                                <div class="log-info-item">
-                                    <span class="log-info-label">Aktivitas</span>
-                                    <span class="log-info-value">Pembersihan internal, penggantian pickup roller, toner refill, kalibrasi</span>
-                                </div>
-                                <div class="log-info-item">
-                                    <span class="log-info-label">Jadwal</span>
-                                    <span class="log-info-value">Rutin bulanan</span>
+                                <div class="ts-card-actions">
+                                    <button class="ts-btn-detail" onclick="viewDetail(this)">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                        Detail
+                                    </button>
                                 </div>
                             </div>
-                        </div>
-                        <div class="log-card-footer">
-                            <div class="log-meta">
-                                <span class="log-meta-item">Budi Santoso</span>
-                                <span class="log-meta-item">8 Apr 2026 • 11:00</span>
+                            <div class="ts-card-body">
+                                <div class="ts-detail-row">
+                                    <span class="ts-detail-label">Aktivitas</span>
+                                    <span class="ts-detail-value">Pembersihan internal, penggantian pickup roller, toner refill, kalibrasi</span>
+                                </div>
+                                <div class="ts-detail-row">
+                                    <span class="ts-detail-label">Jadwal</span>
+                                    <span class="ts-detail-value">Rutin bulanan</span>
+                                </div>
                             </div>
-                            <button class="btn btn-sm btn-secondary" onclick="viewDetail(this)">Detail</button>
+                            <div class="ts-card-footer">
+                                <div class="ts-meta-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                    Budi Santoso
+                                </div>
+                                <div class="ts-meta-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                    8 Apr 2026 &bull; 11:00
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </section>
+
+                </div>
             </div>
         </main>
     </div>
 
     <!-- Detail Modal -->
-    <div id="detailModal" class="modal" style="display: none;">
-        <div class="modal-content modal-lg">
-            <button class="modal-close" onclick="closeDetailModal()">✕</button>
-            <h2>Detail Troubleshoot</h2>
-            <div class="detail-view" id="detailView"></div>
+    <div id="detailModal" class="ts-modal" style="display:none;">
+        <div class="ts-modal-backdrop" onclick="closeDetailModal()"></div>
+        <div class="ts-modal-box">
+            <div class="ts-modal-header">
+                <div class="ts-modal-title-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                </div>
+                <h2>Detail Troubleshoot</h2>
+                <button class="ts-modal-close" onclick="closeDetailModal()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <div class="ts-modal-body" id="detailView"></div>
         </div>
     </div>
 
@@ -305,13 +382,20 @@
         }
 
         function viewDetail(element) {
-            const content = element.closest('.log-card');
-            const html = content.querySelector('.log-card-body').innerHTML;
-            document.getElementById('detailView').innerHTML = html;
+            const card = element.closest('.ts-card');
+            const body = card.querySelector('.ts-card-body').innerHTML;
+            const badge = card.querySelector('.ts-badge').outerHTML;
+            const title = card.querySelector('h4').textContent;
+            const device = card.querySelector('.ts-device-chip').textContent;
+            const footer = card.querySelector('.ts-card-footer').innerHTML;
+            document.getElementById('detailView').innerHTML = `
+                <div class="ts-modal-detail-header">${badge}<h3>${title}</h3><span class="ts-device-chip">${device}</span></div>
+                <div class="ts-modal-detail-body">${body}</div>
+                <div class="ts-modal-detail-footer">${footer}</div>
+            `;
             document.getElementById('detailModal').style.display = 'flex';
         }
 
-        // Filter functionality
         document.getElementById('searchInput').addEventListener('input', filterTimeline);
         document.getElementById('printerFilter').addEventListener('change', filterTimeline);
         document.getElementById('statusFilter').addEventListener('change', filterTimeline);
@@ -321,25 +405,11 @@
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const printerFilter = document.getElementById('printerFilter').value;
             const statusFilter = document.getElementById('statusFilter').value;
-            
-            const items = document.querySelectorAll('.log-card');
-            
-            items.forEach(item => {
+            document.querySelectorAll('.ts-card').forEach(item => {
                 let show = true;
-
-                if (searchTerm) {
-                    const text = item.textContent.toLowerCase();
-                    show = show && text.includes(searchTerm);
-                }
-
-                if (printerFilter) {
-                    show = show && item.dataset.printer === printerFilter;
-                }
-
-                if (statusFilter) {
-                    show = show && item.dataset.status === statusFilter;
-                }
-
+                if (searchTerm) show = show && item.textContent.toLowerCase().includes(searchTerm);
+                if (printerFilter) show = show && item.dataset.printer === printerFilter;
+                if (statusFilter) show = show && item.dataset.status === statusFilter;
                 item.style.display = show ? '' : 'none';
             });
         }
@@ -351,7 +421,6 @@
             document.getElementById('dateFilter').value = '';
             filterTimeline();
         }
-
     </script>
     <script src="mobile-menu.js"></script>
 </body>

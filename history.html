@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -44,7 +44,6 @@
                     <span>History Grafik</span>
                 </a>
             </nav>
-
         </aside>
 
         <!-- Main Content -->
@@ -66,17 +65,11 @@
             </header>
 
             <div class="content-wrapper">
-                <!-- Insight Summary Banner -->
-                <div class="insight-banner" id="insightBanner">
-                    <div class="insight-icon">i</div>
-                    <div class="insight-text" id="insightText">Loading insights...</div>
-                </div>
-
-                <!-- Filters Row -->
-                <section class="filter-section">
-                    <div class="filter-group">
-                        <label>Bulan:</label>
-                        <select id="monthSelect" onchange="switchMonthFromDropdown(this.value)">
+                <!-- Filter Bulan & Tahun -->
+                <section class="date-filter-section">
+                    <div class="date-filter-group">
+                        <label for="monthSelect">Bulan:</label>
+                        <select id="monthSelect" onchange="switchMonth(this.value)">
                             <option value="jan">Januari</option>
                             <option value="feb">Februari</option>
                             <option value="mar">Maret</option>
@@ -91,658 +84,353 @@
                             <option value="dec">Desember</option>
                         </select>
                     </div>
-                    <div class="filter-group">
-                        <label>Tahun:</label>
-                        <select id="yearSelect" onchange="switchYear(this.value)">
-                            <option value="" selected disabled>Tahun</option>
-                            <option value="2026">2026</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label>Filter Lokasi:</label>
-                        <select id="locationFilter" onchange="applyFilters()">
-                            <option value="">Semua Lokasi</option>
-                            <option value="lantai1">Kantor - Lantai 1</option>
-                            <option value="lantai2">Kantor - Lantai 2</option>
-                            <option value="lantai3">Kantor - Lantai 3</option>
-                            <option value="operasional">Ruang Operasional</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label>Filter Jenis:</label>
-                        <select id="typeFilter" onchange="applyFilters()">
-                            <option value="">Semua Jenis</option>
-                            <option value="preventive">Preventive</option>
-                            <option value="corrective">Corrective</option>
-                            <option value="check">Inspeksi</option>
+                    <div class="date-filter-group">
+                        <label for="yearSelect">Tahun:</label>
+                        <select id="yearSelect">
+                            <option value="2026" selected>2026</option>
                         </select>
                     </div>
                 </section>
 
-                <!-- Performance KPI Cards -->
-                <div class="kpi-row">
-                    <div class="kpi-card kpi-primary">
-                        <div class="kpi-header">
-                            <span class="kpi-label">Achievement Rate</span>
-                            <span class="kpi-badge" id="achieveBadge">On Track</span>
-                        </div>
-                        <div class="kpi-value" id="achieveRate">0%</div>
-                        <div class="kpi-progress">
-                            <div class="kpi-progress-bar" id="achieveBar" style="width: 0%"></div>
-                        </div>
-                        <div class="kpi-sub" id="achieveSub">Plan: 0 → Actual: 0</div>
+                <!-- ===================== DIVISI OM IT ===================== -->
+                <div class="divisi-section">
+                    <div class="divisi-header">
+                        <h2>Divisi OM IT</h2>
                     </div>
-
-                    <div class="kpi-card">
-                        <div class="kpi-header">
-                            <span class="kpi-label">vs Bulan Lalu</span>
-                            <span class="kpi-trend" id="trendIcon">—</span>
-                        </div>
-                        <div class="kpi-value" id="trendValue">0%</div>
-                        <div class="kpi-sub" id="trendSub">Tidak ada data pembanding</div>
-                    </div>
-
-                    <div class="kpi-card">
-                        <div class="kpi-header">
-                            <span class="kpi-label">SLA Compliance</span>
-                        </div>
-                        <div class="kpi-value" id="slaValue">0%</div>
-                        <div class="kpi-progress">
-                            <div class="kpi-progress-bar kpi-bar-green" id="slaBar" style="width: 0%"></div>
-                        </div>
-                        <div class="kpi-sub" id="slaSub">On-time: 0 | Delayed: 0</div>
-                    </div>
-
-                    <div class="kpi-card">
-                        <div class="kpi-header">
-                            <span class="kpi-label">Catridge Usage</span>
-                        </div>
-                        <div class="kpi-value" id="cartridgeValue">0 / 0</div>
-                        <div class="kpi-progress">
-                            <div class="kpi-progress-bar kpi-bar-orange" id="cartridgeBar" style="width: 0%"></div>
-                        </div>
-                        <div class="kpi-sub" id="cartridgeSub">Plan vs Actual</div>
-                    </div>
-                </div>
-
-                <!-- Charts Section - Side by Side -->
-                <section class="charts-section charts-equal">
-                    <div class="chart-container">
-                        <div class="chart-header">
-                            <h3>Plan vs Actual Maintenance - <span id="chartTitle">April</span></h3>
-                            <div class="chart-export-dropdown">
-                                <button class="btn-export-toggle" onclick="toggleExport(this)">Export</button>
-                                <div class="export-menu">
-                                    <a onclick="downloadChartAsPNG('historyChart', 'maintenance-history')">PNG</a>
-                                    <a onclick="downloadChartAsJPG('historyChart', 'maintenance-history')">JPG</a>
-                                </div>
+                    <div class="divisi-charts">
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h3 class="daily-title">Grafik Perhari - <span class="month-label">April</span></h3>
+                                <div class="chart-download"><button class="btn-download" onclick="toggleDlMenu(this)" title="Download">&#11015;</button><div class="dl-menu"><a onclick="dlChart('omitDailyChart','png','OMIT_Harian')">PNG</a><a onclick="dlChart('omitDailyChart','jpg','OMIT_Harian')">JPG</a></div></div>
                             </div>
+                            <div class="chart-wrapper"><canvas id="omitDailyChart"></canvas></div>
                         </div>
-                        <div class="chart-wrapper">
-                            <canvas id="historyChart"></canvas>
-                        </div>
-                    </div>
-
-                    <div class="chart-container">
-                        <div class="chart-header">
-                            <h3>Penggantian Catridge - <span id="cartridgeChartTitle">April</span></h3>
-                            <div class="chart-export-dropdown">
-                                <button class="btn-export-toggle" onclick="toggleExport(this)">Export</button>
-                                <div class="export-menu">
-                                    <a onclick="downloadChartAsPNG('cartridgeChart', 'cartridge-history')">PNG</a>
-                                    <a onclick="downloadChartAsJPG('cartridgeChart', 'cartridge-history')">JPG</a>
-                                </div>
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h3>Grafik Perbulan - 2026</h3>
+                                <div class="chart-download"><button class="btn-download" onclick="toggleDlMenu(this)" title="Download">&#11015;</button><div class="dl-menu"><a onclick="dlChart('omitMonthlyChart','png','OMIT_Bulanan')">PNG</a><a onclick="dlChart('omitMonthlyChart','jpg','OMIT_Bulanan')">JPG</a></div></div>
                             </div>
-                        </div>
-                        <div class="chart-wrapper">
-                            <canvas id="cartridgeChart"></canvas>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Anomaly Alerts -->
-                <div class="anomaly-bar" id="anomalyBar" style="display: none;">
-                    <span class="anomaly-icon">!</span>
-                    <span class="anomaly-text" id="anomalyText"></span>
-                </div>
-
-                <!-- Forecast Summary -->
-                <div class="forecast-card" id="forecastCard">
-                    <div class="forecast-header">Proyeksi Akhir Bulan</div>
-                    <div class="forecast-body">
-                        <div class="forecast-item">
-                            <span class="forecast-label">Projected Maintenance</span>
-                            <span class="forecast-value" id="forecastMaint">—</span>
-                        </div>
-                        <div class="forecast-item">
-                            <span class="forecast-label">Projected Catridge</span>
-                            <span class="forecast-value" id="forecastCart">—</span>
-                        </div>
-                        <div class="forecast-item">
-                            <span class="forecast-label">Estimated Achievement</span>
-                            <span class="forecast-value" id="forecastAchieve">—</span>
+                            <div class="chart-wrapper"><canvas id="omitMonthlyChart"></canvas></div>
                         </div>
                     </div>
                 </div>
+
+                <!-- ===================== DIVISI IT LAPTOP ===================== -->
+                <div class="divisi-section">
+                    <div class="divisi-header">
+                        <h2>Divisi IT Laptop</h2>
+                    </div>
+                    <div class="divisi-charts">
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h3 class="daily-title">Grafik Perhari - <span class="month-label">April</span></h3>
+                                <div class="chart-download"><button class="btn-download" onclick="toggleDlMenu(this)" title="Download">&#11015;</button><div class="dl-menu"><a onclick="dlChart('laptopDailyChart','png','Laptop_Harian')">PNG</a><a onclick="dlChart('laptopDailyChart','jpg','Laptop_Harian')">JPG</a></div></div>
+                            </div>
+                            <div class="chart-wrapper"><canvas id="laptopDailyChart"></canvas></div>
+                        </div>
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h3>Grafik Perbulan - 2026</h3>
+                                <div class="chart-download"><button class="btn-download" onclick="toggleDlMenu(this)" title="Download">&#11015;</button><div class="dl-menu"><a onclick="dlChart('laptopMonthlyChart','png','Laptop_Bulanan')">PNG</a><a onclick="dlChart('laptopMonthlyChart','jpg','Laptop_Bulanan')">JPG</a></div></div>
+                            </div>
+                            <div class="chart-wrapper"><canvas id="laptopMonthlyChart"></canvas></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===================== DIVISI IT PRINTER ===================== -->
+                <div class="divisi-section">
+                    <div class="divisi-header">
+                        <h2>Divisi IT Printer</h2>
+                    </div>
+                    <div class="divisi-charts">
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h3 class="daily-title">Grafik Perhari - <span class="month-label">April</span></h3>
+                                <div class="chart-download"><button class="btn-download" onclick="toggleDlMenu(this)" title="Download">&#11015;</button><div class="dl-menu"><a onclick="dlChart('printerDailyChart','png','Printer_Harian')">PNG</a><a onclick="dlChart('printerDailyChart','jpg','Printer_Harian')">JPG</a></div></div>
+                            </div>
+                            <div class="chart-wrapper"><canvas id="printerDailyChart"></canvas></div>
+                        </div>
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h3>Grafik Perbulan - 2026</h3>
+                                <div class="chart-download"><button class="btn-download" onclick="toggleDlMenu(this)" title="Download">&#11015;</button><div class="dl-menu"><a onclick="dlChart('printerMonthlyChart','png','Printer_Bulanan')">PNG</a><a onclick="dlChart('printerMonthlyChart','jpg','Printer_Bulanan')">JPG</a></div></div>
+                            </div>
+                            <div class="chart-wrapper"><canvas id="printerMonthlyChart"></canvas></div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </main>
     </div>
 
     <script src="script.js"></script>
     <script>
-        const monthsData = {
-            'jan': {
-                name: 'Januari',
-                plan: [2, 3, 4, 3, 2, 1, 2, 3, 5, 4, 3, 2, 1, 3, 4, 5, 3, 2, 4, 3, 2, 1, 3, 4, 5, 4, 3, 2, 1, 2, 3],
-                actual: [1, 2, 3, 4, 3, 2, 1, 2, 4, 5, 4, 3, 2, 2, 3, 4, 4, 3, 3, 4, 3, 2, 2, 3, 4, 5, 4, 3, 2, 1, 2],
-                planCartridge: [3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3, 4, 5, 7, 8, 9, 8, 7, 5, 4, 3, 2, 3, 5, 6, 8, 9, 8, 6, 5, 4],
-                actualCartridge: [2, 3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3, 4, 6, 7, 8, 9, 8, 6, 5, 4, 3, 2, 4, 5, 7, 8, 9, 7, 6, 5]
+        const monthNames = {
+            jan:'Januari', feb:'Februari', mar:'Maret', apr:'April',
+            may:'Mei', jun:'Juni', jul:'Juli', aug:'Agustus',
+            sep:'September', oct:'Oktober', nov:'November', dec:'Desember'
+        };
+        const monthKeys = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+        const monthlyLabels = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+
+        // ===== DATA PER DIVISI PER BULAN (daily) =====
+        const historyData = {
+            omit: {
+                jan: { plan: [2,3,4,3,2,1,2,3,5,4,3,2,1,3,4,5,3,2,4,3,2,1,3,4,5,4,3,2,1,2,3], actual: [1,2,3,4,3,2,1,2,4,5,4,3,2,2,3,4,4,3,3,4,3,2,2,3,4,5,4,3,2,1,2] },
+                feb: { plan: [8,7,9,10,8,7,6,9,10,11,9,8,7,6,8,10,11,9,8,7,9,10,8,7,6,8,9,10], actual: [7,8,8,9,9,8,7,8,9,10,10,9,8,7,7,9,10,10,9,8,8,9,9,8,7,7,8,9] },
+                mar: { plan: [5,6,4,3,5,7,8,6,4,3,5,7,9,8,6,4,3,5,7,8,6,4,3,5,7,9,8,6,4,3,5], actual: [4,5,5,4,4,6,7,7,5,4,4,6,8,9,7,5,4,4,6,7,7,5,4,4,6,8,9,7,5,4,4] },
+                apr: { plan: [3,5,7,8,7,6,5,6,8,9,8,6,5,4,3,4,6,8,9,8,7,5,4,3,2,3,5,7,8,7], actual: [2,4,6,7,8,7,6,5,7,9,9,7,6,5,4,5,7,8,8,7,6,4,3,2,1,2,4,6,7,6] },
+                may: { plan: new Array(31).fill(0), actual: new Array(31).fill(0) },
+                jun: { plan: new Array(30).fill(0), actual: new Array(30).fill(0) },
+                jul: { plan: new Array(31).fill(0), actual: new Array(31).fill(0) },
+                aug: { plan: new Array(31).fill(0), actual: new Array(31).fill(0) },
+                sep: { plan: new Array(30).fill(0), actual: new Array(30).fill(0) },
+                oct: { plan: new Array(31).fill(0), actual: new Array(31).fill(0) },
+                nov: { plan: new Array(30).fill(0), actual: new Array(30).fill(0) },
+                dec: { plan: new Array(31).fill(0), actual: new Array(31).fill(0) },
+                monthly: { plan: [30,28,35,40,0,0,0,0,0,0,0,0], actual: [25,26,32,38,0,0,0,0,0,0,0,0] }
             },
-            'feb': {
-                name: 'Februari',
-                plan: [8, 7, 9, 10, 8, 7, 6, 9, 10, 11, 9, 8, 7, 6, 8, 10, 11, 9, 8, 7, 9, 10, 8, 7, 6, 8, 9, 10],
-                actual: [7, 8, 8, 9, 9, 8, 7, 8, 9, 10, 10, 9, 8, 7, 7, 9, 10, 10, 9, 8, 8, 9, 9, 8, 7, 7, 8, 9],
-                planCartridge: [5, 6, 7, 8, 9, 10, 9, 8, 7, 6, 5, 4, 5, 6, 8, 9, 10, 9, 7, 6, 5, 4, 5, 7, 8, 9, 8, 6],
-                actualCartridge: [4, 5, 6, 7, 8, 9, 10, 9, 8, 7, 6, 5, 4, 5, 7, 8, 9, 10, 8, 7, 6, 5, 4, 6, 7, 8, 9, 7]
+            laptop: {
+                jan: { plan: [1,2,2,3,2,1,1,2,3,3,2,1,1,2,3,3,2,1,2,2,1,1,2,3,3,2,1,1,2,2,1], actual: [1,1,2,2,2,1,1,1,2,3,2,1,1,1,2,3,2,1,2,2,1,1,1,2,3,2,1,1,2,1,1] },
+                feb: { plan: [4,5,6,5,4,3,4,5,6,7,5,4,3,4,5,6,7,5,4,3,5,6,4,3,4,5,6,5], actual: [3,4,5,5,4,3,3,4,5,6,5,4,3,3,4,5,6,5,4,3,4,5,4,3,3,4,5,5] },
+                mar: { plan: [3,4,3,2,3,4,5,4,3,2,3,4,5,4,3,2,3,4,5,4,3,2,3,4,5,4,3,2,3,4,3], actual: [2,3,3,2,2,3,4,4,3,2,2,3,4,4,3,2,2,3,4,4,3,2,2,3,4,4,3,2,2,3,3] },
+                apr: { plan: [2,4,3,5,6,4,3,5,4,6,5,3,4,3,2,3,5,4,6,5,4,3,2,4,3,5,4,3,5,4], actual: [1,3,3,4,5,4,2,4,3,5,5,3,3,3,2,2,4,4,5,4,3,2,2,3,2,4,3,3,4,3] },
+                may: { plan: new Array(31).fill(0), actual: new Array(31).fill(0) },
+                jun: { plan: new Array(30).fill(0), actual: new Array(30).fill(0) },
+                jul: { plan: new Array(31).fill(0), actual: new Array(31).fill(0) },
+                aug: { plan: new Array(31).fill(0), actual: new Array(31).fill(0) },
+                sep: { plan: new Array(30).fill(0), actual: new Array(30).fill(0) },
+                oct: { plan: new Array(31).fill(0), actual: new Array(31).fill(0) },
+                nov: { plan: new Array(30).fill(0), actual: new Array(30).fill(0) },
+                dec: { plan: new Array(31).fill(0), actual: new Array(31).fill(0) },
+                monthly: { plan: [20,22,25,28,0,0,0,0,0,0,0,0], actual: [18,20,23,26,0,0,0,0,0,0,0,0] }
             },
-            'mar': {
-                name: 'Maret',
-                plan: [5, 6, 4, 3, 5, 7, 8, 6, 4, 3, 5, 7, 9, 8, 6, 4, 3, 5, 7, 8, 6, 4, 3, 5, 7, 9, 8, 6, 4, 3, 5],
-                actual: [4, 5, 5, 4, 4, 6, 7, 7, 5, 4, 4, 6, 8, 9, 7, 5, 4, 4, 6, 7, 7, 5, 4, 4, 6, 8, 9, 7, 5, 4, 4],
-                planCartridge: [7, 8, 9, 8, 6, 5, 4, 3, 4, 6, 7, 9, 10, 9, 7, 5, 4, 3, 4, 6, 8, 9, 10, 8, 7, 5, 4, 3, 5, 7, 8],
-                actualCartridge: [6, 7, 8, 9, 7, 6, 5, 4, 3, 5, 6, 8, 9, 10, 8, 6, 5, 4, 3, 5, 7, 8, 9, 9, 8, 6, 5, 4, 4, 6, 7]
-            },
-            'apr': {
-                name: 'April',
-                plan: [10, 9, 8, 7, 6, 5, 6, 7, 8, 9, 10, 9, 8, 7, 6, 5, 4, 5, 6, 7, 8, 9, 10, 9, 8, 7, 6, 5, 4, 3],
-                actual: [9, 8, 7, 8, 7, 6, 5, 6, 7, 10, 11, 10, 9, 8, 7, 6, 5, 4, 5, 6, 7, 8, 9, 10, 9, 8, 7, 6, 5, 4],
-                planCartridge: [2, 3, 5, 7, 9, 10, 9, 8, 6, 4, 3, 2, 3, 5, 7, 9, 10, 8, 6, 4, 3, 2, 4, 6, 8, 10, 9, 7, 5, 3],
-                actualCartridge: [3, 4, 6, 8, 10, 9, 8, 7, 5, 3, 2, 3, 4, 6, 8, 10, 9, 7, 5, 3, 2, 3, 5, 7, 9, 9, 8, 6, 4, 2]
-            },
-            'may': { name: 'Mei', plan: new Array(31).fill(0), actual: new Array(31).fill(0), planCartridge: new Array(31).fill(0), actualCartridge: new Array(31).fill(0) },
-            'jun': { name: 'Juni', plan: new Array(30).fill(0), actual: new Array(30).fill(0), planCartridge: new Array(30).fill(0), actualCartridge: new Array(30).fill(0) },
-            'jul': { name: 'Juli', plan: new Array(31).fill(0), actual: new Array(31).fill(0), planCartridge: new Array(31).fill(0), actualCartridge: new Array(31).fill(0) },
-            'aug': { name: 'Agustus', plan: new Array(31).fill(0), actual: new Array(31).fill(0), planCartridge: new Array(31).fill(0), actualCartridge: new Array(31).fill(0) },
-            'sep': { name: 'September', plan: new Array(30).fill(0), actual: new Array(30).fill(0), planCartridge: new Array(30).fill(0), actualCartridge: new Array(30).fill(0) },
-            'oct': { name: 'Oktober', plan: new Array(31).fill(0), actual: new Array(31).fill(0), planCartridge: new Array(31).fill(0), actualCartridge: new Array(31).fill(0) },
-            'nov': { name: 'November', plan: new Array(30).fill(0), actual: new Array(30).fill(0), planCartridge: new Array(30).fill(0), actualCartridge: new Array(30).fill(0) },
-            'dec': { name: 'Desember', plan: new Array(31).fill(0), actual: new Array(31).fill(0), planCartridge: new Array(31).fill(0), actualCartridge: new Array(31).fill(0) }
+            printer: {
+                jan: { plan: [3,4,5,6,7,8,7,6,5,4,3,4,5,7,8,9,8,7,5,4,3,2,3,5,6,8,9,8,6,5,4], actual: [2,3,4,5,6,7,8,7,6,5,4,3,4,6,7,8,9,8,6,5,4,3,2,4,5,7,8,9,7,6,5] },
+                feb: { plan: [5,6,7,8,9,10,9,8,7,6,5,4,5,6,8,9,10,9,7,6,5,4,5,7,8,9,8,6], actual: [4,5,6,7,8,9,10,9,8,7,6,5,4,5,7,8,9,10,8,7,6,5,4,6,7,8,9,7] },
+                mar: { plan: [7,8,9,8,6,5,4,3,4,6,7,9,10,9,7,5,4,3,4,6,8,9,10,8,7,5,4,3,5,7,8], actual: [6,7,8,9,7,6,5,4,3,5,6,8,9,10,8,6,5,4,3,5,7,8,9,9,8,6,5,4,4,6,7] },
+                apr: { plan: [5,6,8,7,9,6,5,8,7,9,8,7,6,5,7,8,9,7,6,8,7,9,8,6,9,7,8,6,7,8], actual: [5,6,8,7,8,7,6,8,8,9,7,8,7,6,8,7,9,8,7,8,8,8,7,7,8,8,7,6,8,8] },
+                may: { plan: new Array(31).fill(0), actual: new Array(31).fill(0) },
+                jun: { plan: new Array(30).fill(0), actual: new Array(30).fill(0) },
+                jul: { plan: new Array(31).fill(0), actual: new Array(31).fill(0) },
+                aug: { plan: new Array(31).fill(0), actual: new Array(31).fill(0) },
+                sep: { plan: new Array(30).fill(0), actual: new Array(30).fill(0) },
+                oct: { plan: new Array(31).fill(0), actual: new Array(31).fill(0) },
+                nov: { plan: new Array(30).fill(0), actual: new Array(30).fill(0) },
+                dec: { plan: new Array(31).fill(0), actual: new Array(31).fill(0) },
+                monthly: { plan: [40,38,42,45,0,0,0,0,0,0,0,0], actual: [38,36,40,43,0,0,0,0,0,0,0,0] }
+            }
         };
 
-        const monthOrder = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
         let currentMonth = 'apr';
-        let currentYear = '2026';
-        let chartInstance = null;
-        let cartridgeChartInstance = null;
-        let viewMode = 'monthly';
+        const charts = {};
 
-        function sum(arr) { return arr.reduce((a, b) => a + b, 0); }
-        function avg(arr) { return arr.length ? (sum(arr) / arr.length) : 0; }
-
-        function getPrevMonth(month) {
-            const idx = monthOrder.indexOf(month);
-            return idx > 0 ? monthOrder[idx - 1] : null;
-        }
-
-        function hasData(month) {
-            return monthsData[month] && sum(monthsData[month].plan) > 0;
-        }
-
-        // ─── INSIGHT ENGINE ───
-        function updateInsights() {
-            const data = monthsData[currentMonth];
-            const totalPlan = sum(data.plan);
-            const totalActual = sum(data.actual);
-            const banner = document.getElementById('insightBanner');
-            const text = document.getElementById('insightText');
-
-            if (totalPlan === 0 && totalActual === 0) {
-                banner.className = 'insight-banner insight-empty';
-                text.textContent = `Belum ada data maintenance untuk ${data.name}. Data akan muncul setelah ada input.`;
-                return;
-            }
-
-            const pct = ((totalActual / totalPlan) * 100).toFixed(1);
-            const diff = totalActual - totalPlan;
-            const diffPct = ((diff / totalPlan) * 100).toFixed(1);
-
-            if (diff > 0) {
-                banner.className = 'insight-banner insight-over';
-                text.innerHTML = `Actual maintenance <strong>melebihi plan sebesar +${diffPct}%</strong> (${totalActual} vs ${totalPlan}). Performa baik — semua target terpenuhi.`;
-            } else if (diff < 0) {
-                banner.className = 'insight-banner insight-under';
-                text.innerHTML = `Actual maintenance <strong>di bawah plan sebesar ${diffPct}%</strong> (${totalActual} vs ${totalPlan}). Perlu evaluasi jadwal.`;
-            } else {
-                banner.className = 'insight-banner insight-match';
-                text.innerHTML = `Actual maintenance <strong>tepat sesuai plan</strong> (${totalActual}). Perfect execution!`;
-            }
-        }
-
-        // ─── KPI ENGINE ───
-        function updateKPIs() {
-            const data = monthsData[currentMonth];
-            const totalPlan = sum(data.plan);
-            const totalActual = sum(data.actual);
-            const totalPlanCart = sum(data.planCartridge);
-            const totalActualCart = sum(data.actualCartridge);
-
-            // Achievement
-            const achievePct = totalPlan > 0 ? Math.round((totalActual / totalPlan) * 100) : 0;
-            document.getElementById('achieveRate').textContent = achievePct + '%';
-            document.getElementById('achieveBar').style.width = Math.min(achievePct, 100) + '%';
-            document.getElementById('achieveSub').textContent = `Plan: ${totalPlan} → Actual: ${totalActual}`;
-
-            const badge = document.getElementById('achieveBadge');
-            if (achievePct >= 95) {
-                badge.textContent = 'On Track';
-                badge.className = 'kpi-badge kpi-badge-green';
-                document.getElementById('achieveBar').className = 'kpi-progress-bar kpi-bar-green';
-            } else if (achievePct >= 80) {
-                badge.textContent = 'Almost';
-                badge.className = 'kpi-badge kpi-badge-orange';
-                document.getElementById('achieveBar').className = 'kpi-progress-bar kpi-bar-orange';
-            } else {
-                badge.textContent = 'Behind';
-                badge.className = 'kpi-badge kpi-badge-red';
-                document.getElementById('achieveBar').className = 'kpi-progress-bar kpi-bar-red';
-            }
-
-            // Trend vs last month
-            const prevKey = getPrevMonth(currentMonth);
-            if (prevKey && hasData(prevKey)) {
-                const prevActual = sum(monthsData[prevKey].actual);
-                const change = prevActual > 0 ? (((totalActual - prevActual) / prevActual) * 100).toFixed(1) : 0;
-                const icon = document.getElementById('trendIcon');
-                const val = document.getElementById('trendValue');
-                const sub = document.getElementById('trendSub');
-
-                if (change > 0) {
-                    icon.textContent = '▲';
-                    val.textContent = '+' + change + '%';
-                    val.className = 'kpi-value kpi-green';
-                } else if (change < 0) {
-                    icon.textContent = '▼';
-                    val.textContent = change + '%';
-                    val.className = 'kpi-value kpi-red';
-                } else {
-                    icon.textContent = '—';
-                    val.textContent = '0%';
-                    val.className = 'kpi-value';
-                }
-                sub.textContent = `vs ${monthsData[prevKey].name} (${prevActual})`;
-            } else {
-                document.getElementById('trendIcon').textContent = '—';
-                document.getElementById('trendValue').textContent = 'N/A';
-                document.getElementById('trendValue').className = 'kpi-value';
-                document.getElementById('trendSub').textContent = 'Tidak ada data bulan sebelumnya';
-            }
-
-            // SLA (simulate: days where actual >= plan = on-time)
-            let onTime = 0, delayed = 0;
-            for (let i = 0; i < data.plan.length; i++) {
-                if (data.plan[i] === 0 && data.actual[i] === 0) continue;
-                if (data.actual[i] >= data.plan[i]) onTime++;
-                else delayed++;
-            }
-            const total = onTime + delayed;
-            const slaPct = total > 0 ? Math.round((onTime / total) * 100) : 0;
-            document.getElementById('slaValue').textContent = slaPct + '%';
-            document.getElementById('slaBar').style.width = slaPct + '%';
-            document.getElementById('slaSub').textContent = `On-time: ${onTime} hari | Delayed: ${delayed} hari`;
-
-            // Cartridge
-            document.getElementById('cartridgeValue').textContent = `${totalActualCart} / ${totalPlanCart}`;
-            const cartPct = totalPlanCart > 0 ? Math.round((totalActualCart / totalPlanCart) * 100) : 0;
-            document.getElementById('cartridgeBar').style.width = Math.min(cartPct, 100) + '%';
-            document.getElementById('cartridgeSub').textContent = `Usage: ${cartPct}% dari plan`;
-        }
-
-        // ─── ANOMALY DETECTION ───
-        function detectAnomalies() {
-            const data = monthsData[currentMonth];
-            const bar = document.getElementById('anomalyBar');
-            const text = document.getElementById('anomalyText');
-            const alerts = [];
-
-            const avgVal = avg(data.actual);
-            const stdDev = Math.sqrt(avg(data.actual.map(v => Math.pow(v - avgVal, 2))));
-
-            data.actual.forEach((val, i) => {
-                if (val > avgVal + 2 * stdDev && val > 0) {
-                    alerts.push(`Hari ${i + 1}: spike unusually high (${val})`);
-                }
-            });
-
-            // Check large gap days
-            let bigGapDays = 0;
-            for (let i = 0; i < data.plan.length; i++) {
-                if (data.plan[i] > 0 && data.actual[i] === 0) bigGapDays++;
-            }
-            if (bigGapDays >= 3) {
-                alerts.push(`${bigGapDays} hari tanpa maintenance padahal ada plan`);
-            }
-
-            if (alerts.length > 0) {
-                bar.style.display = 'flex';
-                text.textContent = alerts.join(' • ');
-            } else {
-                bar.style.display = 'none';
-            }
-        }
-
-        // ─── FORECAST ───
-        function updateForecast() {
-            const data = monthsData[currentMonth];
-            const totalDays = data.plan.length;
-            const today = 10; // Simulate day 10
-            const actualSoFar = sum(data.actual.slice(0, today));
-            const planTotal = sum(data.plan);
-            const planCartTotal = sum(data.planCartridge);
-            const cartSoFar = sum(data.actualCartridge.slice(0, today));
-
-            if (actualSoFar === 0) {
-                document.getElementById('forecastMaint').textContent = '—';
-                document.getElementById('forecastCart').textContent = '—';
-                document.getElementById('forecastAchieve').textContent = '—';
-                return;
-            }
-
-            const dailyRate = actualSoFar / today;
-            const projected = Math.round(dailyRate * totalDays);
-            const cartDailyRate = cartSoFar / today;
-            const projectedCart = Math.round(cartDailyRate * totalDays);
-            const projectedPct = planTotal > 0 ? Math.round((projected / planTotal) * 100) : 0;
-
-            document.getElementById('forecastMaint').textContent = `~${projected} unit`;
-            document.getElementById('forecastCart').textContent = `~${projectedCart} unit`;
-            document.getElementById('forecastAchieve').textContent = `~${projectedPct}%`;
-        }
-
-        // ─── CHART CREATION ───
-        function generateLabels(data) {
-            return Array.from({length: data.plan.length}, (_, i) => String(i + 1));
-        }
-
-        // Custom plugin for gap shading
-        const gapShadingPlugin = {
-            id: 'gapShading',
-            beforeDatasetsDraw(chart) {
-                const ctx = chart.ctx;
-                const meta0 = chart.getDatasetMeta(0); // plan
-                const meta1 = chart.getDatasetMeta(1); // actual
-                if (!meta0.data.length || !meta1.data.length) return;
-
-                for (let i = 0; i < meta0.data.length - 1; i++) {
-                    const p1 = meta0.data[i], p2 = meta0.data[i+1];
-                    const a1 = meta1.data[i], a2 = meta1.data[i+1];
-
-                    ctx.save();
-                    ctx.beginPath();
-                    ctx.moveTo(p1.x, p1.y);
-                    ctx.lineTo(p2.x, p2.y);
-                    ctx.lineTo(a2.x, a2.y);
-                    ctx.lineTo(a1.x, a1.y);
-                    ctx.closePath();
-
-                    const planVal = chart.data.datasets[0].data[i];
-                    const actVal = chart.data.datasets[1].data[i];
-                    if (actVal > planVal) {
-                        ctx.fillStyle = 'rgba(39, 174, 96, 0.08)';
-                    } else if (actVal < planVal) {
-                        ctx.fillStyle = 'rgba(231, 76, 60, 0.08)';
-                    } else {
-                        ctx.fillStyle = 'transparent';
-                    }
-                    ctx.fill();
-                    ctx.restore();
-                }
+        const chartOpts = {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { mode: 'index', intersect: false },
+            scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } },
+                x: { grid: { color: 'rgba(0,0,0,0.03)' } }
+            },
+            plugins: {
+                legend: { position: 'bottom', labels: { boxWidth: 12, padding: 10, usePointStyle: true } }
             }
         };
 
-        function getPointColors(plan, actual) {
-            return actual.map((val, i) => {
-                if (val > plan[i]) return '#27ae60';
-                if (val < plan[i]) return '#e74c3c';
-                return '#FF9800';
+        function ds(label, data, color) {
+            return {
+                label, data,
+                borderColor: color,
+                backgroundColor: color + '1A',
+                borderWidth: 2, tension: 0.3, fill: true,
+                pointRadius: 3, pointBackgroundColor: color,
+                pointBorderColor: '#fff', pointBorderWidth: 1
+            };
+        }
+
+        function makeChart(canvasId, labels, datasets) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            if (charts[canvasId]) charts[canvasId].destroy();
+            charts[canvasId] = new Chart(ctx, {
+                type: 'line',
+                data: { labels, datasets },
+                options: chartOpts
             });
         }
 
-        function createChart() {
-            const data = monthsData[currentMonth];
-            const labels = generateLabels(data);
-            const isEmpty = sum(data.plan) === 0 && sum(data.actual) === 0;
+        function makeBarChart(canvasId, labels, datasets) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            if (charts[canvasId]) charts[canvasId].destroy();
+            charts[canvasId] = new Chart(ctx, {
+                type: 'bar',
+                data: { labels, datasets },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } },
+                        x: { grid: { color: 'rgba(0,0,0,0.03)' } }
+                    },
+                    plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 12, padding: 10 } }
+                    }
+                }
+            });
+        }
 
-            // Maintenance chart
-            const ctx = document.getElementById('historyChart').getContext('2d');
-            if (chartInstance) chartInstance.destroy();
+        function dsBar(label, data, color) {
+            return {
+                label, data,
+                backgroundColor: color + '99',
+                borderColor: color,
+                borderWidth: 1,
+                borderRadius: 4
+            };
+        }
 
-            if (isEmpty) {
-                ctx.save();
-                ctx.font = '14px -apple-system, sans-serif';
-                ctx.fillStyle = '#999';
-                ctx.textAlign = 'center';
-                ctx.fillText('Belum ada data untuk bulan ini', ctx.canvas.width / 2, ctx.canvas.height / 2);
-                ctx.restore();
-                chartInstance = null;
-            } else {
-                // Forecast dashed line
-                const today = 10;
-                const dailyRate = sum(data.actual.slice(0, today)) / today;
-                const forecastData = data.actual.map((val, i) => {
-                    return i >= today ? Math.round(dailyRate * (1 + Math.random() * 0.2 - 0.1)) : null;
+        // Hitung total per bulan dari data harian
+        function getMonthlyTotals(divisiKey) {
+            const divisi = historyData[divisiKey];
+            const planTotals = [];
+            const actualTotals = [];
+            monthKeys.forEach(m => {
+                planTotals.push(divisi[m].plan.reduce((a,b) => a+b, 0));
+                actualTotals.push(divisi[m].actual.reduce((a,b) => a+b, 0));
+            });
+            return { plan: planTotals, actual: actualTotals };
+        }
+
+        function getDailyLabels(month) {
+            const days = historyData.omit[month].plan.length;
+            return Array.from({length: days}, (_, i) => String(i + 1));
+        }
+
+        function renderCharts() {
+            const month = currentMonth;
+            const isYearly = (month === 'all');
+
+            if (isYearly) {
+                // Grafik kiri: Total per bulan (bar chart) - rangkuman 1 tahun
+                const omTotals = getMonthlyTotals('omit');
+                const lapTotals = getMonthlyTotals('laptop');
+                const prtTotals = getMonthlyTotals('printer');
+
+                makeBarChart('omitDailyChart', monthlyLabels, [
+                    dsBar('Plan', omTotals.plan, '#2196F3'),
+                    dsBar('Actual', omTotals.actual, '#FF9800')
+                ]);
+                makeBarChart('laptopDailyChart', monthlyLabels, [
+                    dsBar('Plan', lapTotals.plan, '#4CAF50'),
+                    dsBar('Actual', lapTotals.actual, '#E91E63')
+                ]);
+                makeBarChart('printerDailyChart', monthlyLabels, [
+                    dsBar('Plan', prtTotals.plan, '#9C27B0'),
+                    dsBar('Actual', prtTotals.actual, '#FF5722')
+                ]);
+
+                // Update judul kiri
+                document.querySelectorAll('.daily-title').forEach(el => {
+                    el.innerHTML = 'Total Perbulan - <span class="month-label">2026</span>';
                 });
-                forecastData[today - 1] = data.actual[today - 1]; // connect point
 
-                chartInstance = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels,
-                        datasets: [{
-                            label: 'Plan Maintenance',
-                            data: data.plan,
-                            borderColor: '#2196F3',
-                            backgroundColor: 'rgba(33, 150, 243, 0.05)',
-                            borderWidth: 2.5,
-                            tension: 0.3,
-                            fill: false,
-                            pointRadius: 3,
-                            pointBackgroundColor: '#2196F3',
-                            pointBorderColor: '#fff',
-                            pointBorderWidth: 1
-                        }, {
-                            label: 'Actual Maintenance',
-                            data: data.actual,
-                            borderColor: '#FF9800',
-                            backgroundColor: 'rgba(255, 152, 0, 0.05)',
-                            borderWidth: 2.5,
-                            tension: 0.3,
-                            fill: false,
-                            pointRadius: 4,
-                            pointBackgroundColor: getPointColors(data.plan, data.actual),
-                            pointBorderColor: '#fff',
-                            pointBorderWidth: 1
-                        }, {
-                            label: 'Forecast',
-                            data: forecastData,
-                            borderColor: 'rgba(156, 39, 176, 0.5)',
-                            borderWidth: 2,
-                            borderDash: [8, 4],
-                            tension: 0.3,
-                            fill: false,
-                            pointRadius: 0,
-                            pointHoverRadius: 4,
-                            pointBackgroundColor: 'rgba(156, 39, 176, 0.5)'
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        interaction: { mode: 'index', intersect: false },
-                        scales: {
-                            y: { beginAtZero: true, max: 12, grid: { color: 'rgba(0,0,0,0.05)' } },
-                            x: { grid: { color: 'rgba(0,0,0,0.03)' } }
-                        },
-                        plugins: {
-                            legend: { position: 'bottom', labels: { usePointStyle: true, padding: 16 } },
-                            tooltip: {
-                                backgroundColor: 'rgba(2, 16, 36, 0.9)',
-                                titleFont: { weight: '600' },
-                                callbacks: {
-                                    afterBody: function(ctx) {
-                                        const i = ctx[0].dataIndex;
-                                        const plan = data.plan[i];
-                                        const actual = data.actual[i];
-                                        const diff = actual - plan;
-                                        const status = diff > 0 ? '+ Above plan' : diff < 0 ? '- Below plan' : '= On target';
-                                        return [`Gap: ${diff > 0 ? '+' : ''}${diff}`, status];
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    plugins: [gapShadingPlugin]
+                // Grafik kanan: Trend line perbulan
+                makeChart('omitMonthlyChart', monthlyLabels, [
+                    ds('Plan', historyData.omit.monthly.plan, '#2196F3'),
+                    ds('Actual', historyData.omit.monthly.actual, '#FF9800')
+                ]);
+                makeChart('laptopMonthlyChart', monthlyLabels, [
+                    ds('Plan', historyData.laptop.monthly.plan, '#4CAF50'),
+                    ds('Actual', historyData.laptop.monthly.actual, '#E91E63')
+                ]);
+                makeChart('printerMonthlyChart', monthlyLabels, [
+                    ds('Plan', historyData.printer.monthly.plan, '#9C27B0'),
+                    ds('Actual', historyData.printer.monthly.actual, '#FF5722')
+                ]);
+
+            } else {
+                // Per bulan: grafik kiri = perhari, grafik kanan = perbulan
+                const dailyLabels = getDailyLabels(month);
+
+                makeChart('omitDailyChart', dailyLabels, [
+                    ds('Plan', historyData.omit[month].plan, '#2196F3'),
+                    ds('Actual', historyData.omit[month].actual, '#FF9800')
+                ]);
+                makeChart('omitMonthlyChart', monthlyLabels, [
+                    ds('Plan', historyData.omit.monthly.plan, '#2196F3'),
+                    ds('Actual', historyData.omit.monthly.actual, '#FF9800')
+                ]);
+
+                makeChart('laptopDailyChart', dailyLabels, [
+                    ds('Plan', historyData.laptop[month].plan, '#4CAF50'),
+                    ds('Actual', historyData.laptop[month].actual, '#E91E63')
+                ]);
+                makeChart('laptopMonthlyChart', monthlyLabels, [
+                    ds('Plan', historyData.laptop.monthly.plan, '#4CAF50'),
+                    ds('Actual', historyData.laptop.monthly.actual, '#E91E63')
+                ]);
+
+                makeChart('printerDailyChart', dailyLabels, [
+                    ds('Plan', historyData.printer[month].plan, '#9C27B0'),
+                    ds('Actual', historyData.printer[month].actual, '#FF5722')
+                ]);
+                makeChart('printerMonthlyChart', monthlyLabels, [
+                    ds('Plan', historyData.printer.monthly.plan, '#9C27B0'),
+                    ds('Actual', historyData.printer.monthly.actual, '#FF5722')
+                ]);
+
+                // Update judul kiri
+                document.querySelectorAll('.daily-title').forEach(el => {
+                    el.innerHTML = 'Grafik Perhari - <span class="month-label">' + monthNames[month] + '</span>';
                 });
             }
-
-            // Cartridge chart
-            const ctxC = document.getElementById('cartridgeChart').getContext('2d');
-            if (cartridgeChartInstance) cartridgeChartInstance.destroy();
-
-            if (isEmpty) {
-                ctxC.save();
-                ctxC.font = '14px -apple-system, sans-serif';
-                ctxC.fillStyle = '#999';
-                ctxC.textAlign = 'center';
-                ctxC.fillText('Belum ada data untuk bulan ini', ctxC.canvas.width / 2, ctxC.canvas.height / 2);
-                ctxC.restore();
-                cartridgeChartInstance = null;
-            } else {
-                cartridgeChartInstance = new Chart(ctxC, {
-                    type: 'line',
-                    data: {
-                        labels,
-                        datasets: [{
-                            label: 'Plan Catridge',
-                            data: data.planCartridge,
-                            borderColor: '#2196F3',
-                            borderWidth: 2.5,
-                            tension: 0.3,
-                            fill: false,
-                            pointRadius: 3,
-                            pointBackgroundColor: '#2196F3',
-                            pointBorderColor: '#fff',
-                            pointBorderWidth: 1
-                        }, {
-                            label: 'Actual Catridge',
-                            data: data.actualCartridge,
-                            borderColor: '#FF9800',
-                            borderWidth: 2.5,
-                            tension: 0.3,
-                            fill: false,
-                            pointRadius: 4,
-                            pointBackgroundColor: getPointColors(data.planCartridge, data.actualCartridge),
-                            pointBorderColor: '#fff',
-                            pointBorderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        interaction: { mode: 'index', intersect: false },
-                        scales: {
-                            y: { beginAtZero: true, max: 12, grid: { color: 'rgba(0,0,0,0.05)' } },
-                            x: { grid: { color: 'rgba(0,0,0,0.03)' } }
-                        },
-                        plugins: {
-                            legend: { position: 'bottom', labels: { usePointStyle: true, padding: 16 } },
-                            tooltip: {
-                                backgroundColor: 'rgba(2, 16, 36, 0.9)',
-                                titleFont: { weight: '600' },
-                                callbacks: {
-                                    afterBody: function(ctx) {
-                                        const i = ctx[0].dataIndex;
-                                        const plan = data.planCartridge[i];
-                                        const actual = data.actualCartridge[i];
-                                        const diff = actual - plan;
-                                        return [`Gap: ${diff > 0 ? '+' : ''}${diff}`];
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    plugins: [gapShadingPlugin]
-                });
-            }
-
-            updateKPIs();
-            updateInsights();
-            detectAnomalies();
-            updateForecast();
         }
 
         function switchMonth(month) {
-            if (!monthsData[month]) return;
-            currentMonth = month;
-            viewMode = 'monthly';
-            document.getElementById('chartTitle').textContent = monthsData[month].name;
-            document.getElementById('cartridgeChartTitle').textContent = monthsData[month].name;
-            createChart();
-        }
-
-        function switchMonthFromDropdown(month) {
-            document.getElementById('yearSelect').selectedIndex = 0;
-            switchMonth(month);
-        }
-
-        function switchYear(year) {
-            currentYear = year;
-            viewMode = 'yearly';
-            document.getElementById('chartTitle').textContent = 'Tahunan ' + year;
-            document.getElementById('cartridgeChartTitle').textContent = 'Tahunan ' + year;
-            document.getElementById('monthSelect').selectedIndex = -1;
-            createChart();
-        }
-
-        function applyFilters() {
-            // Placeholder for filter logic (would require per-device data in real app)
-            createChart();
-        }
-
-        // Export dropdown
-        function toggleExport(btn) {
-            const menu = btn.nextElementSibling;
-            document.querySelectorAll('.export-menu.open').forEach(m => {
-                if (m !== menu) m.classList.remove('open');
-            });
-            menu.classList.toggle('open');
-        }
-
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.chart-export-dropdown')) {
-                document.querySelectorAll('.export-menu.open').forEach(m => m.classList.remove('open'));
+            if (month === 'all') {
+                currentMonth = 'all';
+            } else if (!historyData.omit[month]) {
+                return;
+            } else {
+                currentMonth = month;
             }
-        });
-
-        function downloadChartAsPNG(canvasId, filename) {
-            const canvas = document.getElementById(canvasId);
-            const link = document.createElement('a');
-            link.href = canvas.toDataURL('image/png');
-            link.download = `${filename}.png`;
-            link.click();
-        }
-
-        function downloadChartAsJPG(canvasId, filename) {
-            const canvas = document.getElementById(canvasId);
-            const link = document.createElement('a');
-            link.href = canvas.toDataURL('image/jpeg', 0.95);
-            link.download = `${filename}.jpg`;
-            link.click();
+            renderCharts();
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            initializeUserProfile();
-            createChart();
+            renderCharts();
         });
+
+        function toggleDlMenu(btn) {
+            const menu = btn.nextElementSibling;
+            document.querySelectorAll('.dl-menu.show').forEach(m => { if (m !== menu) m.classList.remove('show'); });
+            menu.classList.toggle('show');
+        }
+        document.addEventListener('click', e => {
+            if (!e.target.closest('.chart-download')) document.querySelectorAll('.dl-menu.show').forEach(m => m.classList.remove('show'));
+        });
+        function dlChart(canvasId, format, name) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            if (format === 'jpg') {
+                const tmp = document.createElement('canvas');
+                tmp.width = canvas.width; tmp.height = canvas.height;
+                const ctx = tmp.getContext('2d');
+                ctx.fillStyle = '#fff';
+                ctx.fillRect(0, 0, tmp.width, tmp.height);
+                ctx.drawImage(canvas, 0, 0);
+                link.href = tmp.toDataURL('image/jpeg', 0.95);
+                link.download = name + '.jpg';
+            } else {
+                link.href = canvas.toDataURL('image/png');
+                link.download = name + '.png';
+            }
+            link.click();
+            document.querySelectorAll('.dl-menu.show').forEach(m => m.classList.remove('show'));
+        }
     </script>
     <script src="mobile-menu.js"></script>
 </body>
