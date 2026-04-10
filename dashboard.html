@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Monitoring</title>
+    <title>Dashboard Maintenance - Monitoring</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -27,6 +27,18 @@
                     <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
                     <span>Dashboard</span>
                 </a>
+                <a href="maintenance.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                    <span>Input Maintenance</span>
+                </a>
+                <a href="devices.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v3"/><line x1="12" y1="12" x2="12" y2="12.01"/></svg>
+                    <span>Daftar Perangkat</span>
+                </a>
+                <a href="troubleshoot.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    <span>Troubleshoot Log</span>
+                </a>
                 <a href="history.html" class="nav-item">
                     <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
                     <span>History Grafik</span>
@@ -39,7 +51,7 @@
         <main class="main-content">
             <header class="top-bar">
                 <div class="header-left">
-                    <h1>Dashboard</h1>
+                    <h1>Dashboard Maintenance</h1>
                 </div>
                 <div class="header-right">
                     <div class="topbar-user">
@@ -54,242 +66,240 @@
             </header>
 
             <div class="content-wrapper">
-                <!-- Stat Cards -->
-                <section class="stats-section">
-                    <div class="stat-card">
-                        <div class="stat-icon" style="background: #e3f2fd;">
-                            <span><svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
-                        </div>
-                        <div class="stat-content">
-                            <p class="stat-label">Total Perangkat</p>
-                            <h3 class="stat-value">45</h3>
-                            <p class="stat-change">Aktif & terdaftar</p>
-                        </div>
+                <!-- Date Range Filter -->
+                <section class="date-filter-section">
+                    <div class="date-filter-group">
+                        <label for="dateFrom">Dari Tanggal:</label>
+                        <input type="date" id="dateFrom" value="2026-04-01">
                     </div>
-
-                    <div class="stat-card">
-                        <div class="stat-icon" style="background: #e8f5e9;">
-                            <span>✔️</span>
-                        </div>
-                        <div class="stat-content">
-                            <p class="stat-label">Sudah Dimaintenance</p>
-                            <h3 class="stat-value">28</h3>
-                            <p class="stat-change">62.2% dari total</p>
-                        </div>
+                    <div class="date-filter-group">
+                        <label for="dateTo">Ke Tanggal:</label>
+                        <input type="date" id="dateTo" value="2026-04-10">
                     </div>
-
-                    <div class="stat-card">
-                        <div class="stat-icon" style="background: #fff3e0;">
-                            <span>⏳</span>
-                        </div>
-                        <div class="stat-content">
-                            <p class="stat-label">Belum Dimaintenance</p>
-                            <h3 class="stat-value">12</h3>
-                            <p class="stat-change">26.7% dari total</p>
-                        </div>
-                    </div>
-
-                    <div class="stat-card">
-                        <div class="stat-icon" style="background: #ffebee;">
-                            <span>🔨</span>
-                        </div>
-                        <div class="stat-content">
-                            <p class="stat-label">Dalam Perbaikan</p>
-                            <h3 class="stat-value">5</h3>
-                            <p class="stat-change">11.1% dari total</p>
-                        </div>
-                    </div>
+                    <button class="btn btn-primary btn-sm" onclick="filterByDate()">Filter</button>
                 </section>
 
-                <!-- Charts Section -->
-                <section class="charts-section">
-                    <div class="chart-container wide">
-                        <div class="chart-header">
-                            <h3>Plan vs Actual Maintenance - April 2026</h3>
-                            <div class="chart-actions">
-                                <button class="btn btn-sm btn-secondary" onclick="downloadChartAsPNG('activityChart', 'maintenance-daily')">PNG</button>
-                                <button class="btn btn-sm btn-secondary" onclick="downloadChartAsJPG('activityChart', 'maintenance-daily')">JPG</button>
+                <!-- ===================== DIVISI OM IT ===================== -->
+                <div class="divisi-section">
+                    <div class="divisi-header">
+                        <h2>Divisi OM IT</h2>
+                    </div>
+                    <div class="divisi-stats">
+                        <div class="stat-card mini">
+                            <div class="stat-icon" style="background: #e3f2fd;">
+                                <span>📦</span>
+                            </div>
+                            <div class="stat-content">
+                                <p class="stat-label">Total Perangkat</p>
+                                <h3 class="stat-value">45</h3>
                             </div>
                         </div>
-                        <div class="chart-wrapper">
-                            <canvas id="activityChart"></canvas>
-                        </div>
-                    </div>
-
-                    <div class="chart-container wide">
-                        <div class="chart-header">
-                            <h3>Maintenance Penggantian Tinta - April 2026</h3>
-                            <div class="chart-actions">
-                                <button class="btn btn-sm btn-secondary" onclick="downloadChartAsPNG('inkChart', 'cartridge-replacement')">PNG</button>
-                                <button class="btn btn-sm btn-secondary" onclick="downloadChartAsJPG('inkChart', 'cartridge-replacement')">JPG</button>
+                        <div class="stat-card mini">
+                            <div class="stat-icon" style="background: #e8f5e9;">
+                                <span>✅</span>
+                            </div>
+                            <div class="stat-content">
+                                <p class="stat-label">Sudah Di Maintenance</p>
+                                <h3 class="stat-value">28</h3>
                             </div>
                         </div>
-                        <div class="chart-wrapper">
-                            <canvas id="inkChart"></canvas>
+                        <div class="stat-card mini">
+                            <div class="stat-icon" style="background: #fff3e0;">
+                                <span>⏳</span>
+                            </div>
+                            <div class="stat-content">
+                                <p class="stat-label">Belum Di Maintenance</p>
+                                <h3 class="stat-value">17</h3>
+                            </div>
                         </div>
                     </div>
-                </section>
-
-                <!-- Printer Table Section -->
-                <section class="table-section">
-                    <div class="section-header">
-                        <h3>Daftar Perangkat Terkini</h3>
+                    <div class="divisi-charts">
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h3>Grafik Perhari</h3>
+                            </div>
+                            <div class="chart-wrapper"><canvas id="omitDailyChart"></canvas></div>
+                        </div>
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h3>Grafik Perbulan</h3>
+                            </div>
+                            <div class="chart-wrapper"><canvas id="omitMonthlyChart"></canvas></div>
+                        </div>
                     </div>
+                </div>
 
-                    <div class="table-responsive">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>ID Perangkat</th>
-                                    <th>Lokasi</th>
-                                    <th>Status</th>
-                                    <th>Maintenance Terakhir</th>
-                                    <th>Teknisi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><strong>PR-001</strong></td>
-                                    <td>Kantor - Lantai 1</td>
-                                    <td><span class="badge badge-success">Aktif</span></td>
-                                    <td>12 Apr 2026</td>
-                                    <td>Budi Santoso</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>PR-002</strong></td>
-                                    <td>Kantor - Lantai 2</td>
-                                    <td><span class="badge badge-warning">Pending</span></td>
-                                    <td>5 Apr 2026</td>
-                                    <td>Andi Wijaya</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>PR-003</strong></td>
-                                    <td>Ruang Operasional</td>
-                                    <td><span class="badge badge-success">Aktif</span></td>
-                                    <td>10 Apr 2026</td>
-                                    <td>Budi Santoso</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>PR-004</strong></td>
-                                    <td>Gudang</td>
-                                    <td><span class="badge badge-danger">Perbaikan</span></td>
-                                    <td>2 Apr 2026</td>
-                                    <td>Andi Wijaya</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>PR-005</strong></td>
-                                    <td>Kantor - Lantai 3</td>
-                                    <td><span class="badge badge-success">Aktif</span></td>
-                                    <td>8 Apr 2026</td>
-                                    <td>Roni Hermawan</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <!-- ===================== DIVISI IT LAPTOP ===================== -->
+                <div class="divisi-section">
+                    <div class="divisi-header">
+                        <h2>Divisi IT Laptop</h2>
                     </div>
-                </section>
+                    <div class="divisi-stats">
+                        <div class="stat-card mini">
+                            <div class="stat-icon" style="background: #e3f2fd;">
+                                <span>💻</span>
+                            </div>
+                            <div class="stat-content">
+                                <p class="stat-label">Total Perangkat</p>
+                                <h3 class="stat-value">32</h3>
+                            </div>
+                        </div>
+                        <div class="stat-card mini">
+                            <div class="stat-icon" style="background: #e8f5e9;">
+                                <span>✅</span>
+                            </div>
+                            <div class="stat-content">
+                                <p class="stat-label">Sudah Di Maintenance</p>
+                                <h3 class="stat-value">20</h3>
+                            </div>
+                        </div>
+                        <div class="stat-card mini">
+                            <div class="stat-icon" style="background: #fff3e0;">
+                                <span>⏳</span>
+                            </div>
+                            <div class="stat-content">
+                                <p class="stat-label">Belum Di Maintenance</p>
+                                <h3 class="stat-value">12</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divisi-charts">
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h3>Grafik Perhari</h3>
+                            </div>
+                            <div class="chart-wrapper"><canvas id="laptopDailyChart"></canvas></div>
+                        </div>
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h3>Grafik Perbulan</h3>
+                            </div>
+                            <div class="chart-wrapper"><canvas id="laptopMonthlyChart"></canvas></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===================== DIVISI IT PRINTER ===================== -->
+                <div class="divisi-section">
+                    <div class="divisi-header">
+                        <h2>Divisi IT Printer</h2>
+                    </div>
+                    <div class="divisi-stats">
+                        <div class="stat-card mini">
+                            <div class="stat-icon" style="background: #e3f2fd;">
+                                <span>🖨️</span>
+                            </div>
+                            <div class="stat-content">
+                                <p class="stat-label">Total Perangkat</p>
+                                <h3 class="stat-value">25</h3>
+                            </div>
+                        </div>
+                        <div class="stat-card mini">
+                            <div class="stat-icon" style="background: #e8f5e9;">
+                                <span>✅</span>
+                            </div>
+                            <div class="stat-content">
+                                <p class="stat-label">Sudah Di Maintenance</p>
+                                <h3 class="stat-value">18</h3>
+                            </div>
+                        </div>
+                        <div class="stat-card mini">
+                            <div class="stat-icon" style="background: #fff3e0;">
+                                <span>⏳</span>
+                            </div>
+                            <div class="stat-content">
+                                <p class="stat-label">Belum Di Maintenance</p>
+                                <h3 class="stat-value">7</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divisi-charts">
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h3>Grafik Perhari</h3>
+                            </div>
+                            <div class="chart-wrapper"><canvas id="printerDailyChart"></canvas></div>
+                        </div>
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h3>Grafik Perbulan</h3>
+                            </div>
+                            <div class="chart-wrapper"><canvas id="printerMonthlyChart"></canvas></div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </main>
     </div>
 
     <script src="script.js"></script>
     <script>
-        // Line Chart - Plan vs Actual Maintenance Daily (April 2026)
-        const activityCtx = document.getElementById('activityChart').getContext('2d');
-        new Chart(activityCtx, {
-            type: 'line',
-            data: {
-                labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'],
-                datasets: [{
-                    label: 'Plan Maintenance',
-                    data: [3, 5, 7, 8, 7, 6, 5, 6, 8, 9, 8, 6, 5, 4, 3, 4, 6, 8, 9, 8, 7, 5, 4, 3, 2, 3, 5, 7, 8, 7],
-                    borderColor: '#2196F3',
-                    backgroundColor: 'rgba(33, 150, 243, 0.1)',
-                    borderWidth: 3,
-                    tension: 0,
-                    fill: false,
-                    pointRadius: 3,
-                    pointBackgroundColor: '#2196F3',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 1
-                }, {
-                    label: 'Actual Maintenance',
-                    data: [2, 4, 6, 7, 8, 7, 6, 5, 7, 9, 9, 7, 6, 5, 4, 5, 7, 8, 8, 7, 6, 4, 3, 2, 1, 2, 4, 6, 7, 6],
-                    borderColor: '#FF9800',
-                    backgroundColor: 'rgba(255, 152, 0, 0.1)',
-                    borderWidth: 3,
-                    tension: 0,
-                    fill: false,
-                    pointRadius: 3,
-                    pointBackgroundColor: '#FF9800',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 10
-                    }
-                },
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }
-        });
+        const dailyLabels = ['1','2','3','4','5','6','7','8','9','10'];
+        const monthlyLabels = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
 
-        // Line Chart - Ink Replacement Maintenance (April 2026)
-        const inkCtx = document.getElementById('inkChart').getContext('2d');
-        new Chart(inkCtx, {
-            type: 'line',
-            data: {
-                labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'],
-                datasets: [{
-                    label: 'Plan Cartrige Replacement',
-                    data: [5, 6, 8, 7, 9, 6, 5, 8, 7, 9, 8, 7, 6, 5, 7, 8, 9, 7, 6, 8, 7, 9, 8, 6, 9, 7, 8, 6, 7, 8],
-                    borderColor: '#4CAF50',
-                    backgroundColor: 'rgba(76, 175, 80, 0.1)',
-                    borderWidth: 3,
-                    tension: 0,
-                    fill: false,
-                    pointRadius: 3,
-                    pointBackgroundColor: '#4CAF50',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 1
-                }, {
-                    label: 'Actual Cartrige Replacement',
-                    data: [5, 6, 8, 7, 8, 7, 6, 8, 8, 9, 7, 8, 7, 6, 8, 7, 9, 8, 7, 8, 8, 8, 7, 7, 8, 8, 7, 6, 8, 8],
-                    borderColor: '#E91E63',
-                    backgroundColor: 'rgba(233, 30, 99, 0.1)',
-                    borderWidth: 3,
-                    tension: 0,
-                    fill: false,
-                    pointRadius: 3,
-                    pointBackgroundColor: '#E91E63',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 10
-                    }
-                },
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }
-        });
+        const chartDefaults = {
+            responsive: true,
+            maintainAspectRatio: true,
+            scales: { y: { beginAtZero: true } },
+            plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, padding: 10 } } }
+        };
+
+        function createLineChart(canvasId, labels, datasets) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: { labels, datasets },
+                options: chartDefaults
+            });
+        }
+
+        function ds(label, data, color) {
+            return {
+                label, data,
+                borderColor: color,
+                backgroundColor: color + '1A',
+                borderWidth: 2, tension: 0.3, fill: true,
+                pointRadius: 3, pointBackgroundColor: color,
+                pointBorderColor: '#fff', pointBorderWidth: 1
+            };
+        }
+
+        // ===== DIVISI OM IT =====
+        createLineChart('omitDailyChart', dailyLabels, [
+            ds('Plan', [3,5,7,8,7,6,5,6,8,9], '#2196F3'),
+            ds('Actual', [2,4,6,7,8,7,6,5,7,9], '#FF9800')
+        ]);
+        createLineChart('omitMonthlyChart', monthlyLabels, [
+            ds('Plan', [30,28,35,40,38,32,30,34,36,40,38,35], '#2196F3'),
+            ds('Actual', [25,26,32,38,35,30,28,31,34,0,0,0], '#FF9800')
+        ]);
+
+        // ===== DIVISI IT LAPTOP =====
+        createLineChart('laptopDailyChart', dailyLabels, [
+            ds('Plan', [2,4,3,5,6,4,3,5,4,6], '#4CAF50'),
+            ds('Actual', [1,3,3,4,5,4,2,4,3,5], '#E91E63')
+        ]);
+        createLineChart('laptopMonthlyChart', monthlyLabels, [
+            ds('Plan', [20,22,25,28,26,24,22,25,27,30,28,26], '#4CAF50'),
+            ds('Actual', [18,20,23,26,24,22,20,23,25,0,0,0], '#E91E63')
+        ]);
+
+        // ===== DIVISI IT PRINTER =====
+        createLineChart('printerDailyChart', dailyLabels, [
+            ds('Plan', [5,6,8,7,9,6,5,8,7,9], '#9C27B0'),
+            ds('Actual', [5,6,8,7,8,7,6,8,8,9], '#FF5722')
+        ]);
+        createLineChart('printerMonthlyChart', monthlyLabels, [
+            ds('Plan', [40,38,42,45,43,40,38,42,44,46,44,42], '#9C27B0'),
+            ds('Actual', [38,36,40,43,41,38,36,40,42,0,0,0], '#FF5722')
+        ]);
+
+        function filterByDate() {
+            const from = document.getElementById('dateFrom').value;
+            const to = document.getElementById('dateTo').value;
+            alert('Filter: ' + from + ' s/d ' + to + '\n(Integrasi data backend belum tersedia)');
+        }
     </script>
     <script src="mobile-menu.js"></script>
 </body>

@@ -970,7 +970,7 @@ html.is-zoomed body {
 }
 
 .stat-value {
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 600;
     color: var(--text-dark);
 }
@@ -1048,7 +1048,7 @@ html.is-zoomed body {
 
 .chart-wrapper {
     position: relative;
-    height: 600px;
+    height: 280px;
 }
 
 .month-selector {
@@ -2777,4 +2777,136 @@ input[type="time"] {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #95a5a6;
+}
+
+/* ==========================================
+   DASHBOARD - DIVISI SECTIONS
+   ========================================== */
+
+.date-filter-section {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background: var(--bg-secondary);
+    backdrop-filter: var(--glass-blur);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.date-filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.date-filter-group label {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-gray);
+    white-space: nowrap;
+}
+
+.date-filter-group input[type="date"] {
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    background: #fff;
+    color: var(--text-dark);
+}
+
+.divisi-section {
+    background: var(--bg-secondary);
+    backdrop-filter: var(--glass-blur);
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-sm);
+}
+
+.divisi-header {
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.divisi-header h2 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.divisi-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.stat-card.mini {
+    padding: 12px 14px;
+}
+
+.stat-card.mini .stat-icon {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    font-size: 16px;
+}
+
+.stat-card.mini .stat-content .stat-label {
+    font-size: 0.7rem;
+    margin-bottom: 2px;
+}
+
+.stat-card.mini .stat-content .stat-value {
+    font-size: 1.15rem;
+}
+
+.divisi-charts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+.divisi-charts .chart-container {
+    width: 100%;
+    padding: 14px;
+}
+
+.divisi-charts .chart-wrapper {
+    height: 220px;
+}
+
+.divisi-charts .chart-header {
+    margin-bottom: 10px;
+}
+
+.divisi-charts .chart-header h3 {
+    font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+    .date-filter-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .divisi-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .divisi-charts {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .divisi-section {
+        padding: 16px;
+    }
 }
